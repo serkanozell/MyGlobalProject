@@ -6,6 +6,7 @@ using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory;
 using MyGlobalProject.Application.Features.Categories.Queries.GetAllCategory;
 using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
+using MyGlobalProject.Application.Features.Products.Commands;
 using MyGlobalProject.Domain.Entities;
 
 namespace MyGlobalProject.Application.Mapping
@@ -14,7 +15,8 @@ namespace MyGlobalProject.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Product, ProductAddDTO>().ReverseMap();
+            CreateMap<Product, CreateProductDTO>().ReverseMap();
+            CreateMap<Product,CreateProductCommand>().ReverseMap();
 
             CreateMap<Category, CreateCategoryDTO>().ReverseMap();
             CreateMap<Category, CreateCategoryCommand>().ReverseMap();

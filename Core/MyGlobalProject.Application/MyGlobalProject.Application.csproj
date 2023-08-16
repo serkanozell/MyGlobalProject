@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="Features\Products\Queries\" />
     <Folder Include="ServiceInterfaces\" />
     <Folder Include="Wrappers\" />
     <Folder Include="Parameters\" />

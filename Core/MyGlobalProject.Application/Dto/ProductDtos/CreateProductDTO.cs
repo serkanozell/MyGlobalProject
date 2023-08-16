@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyGlobalProject.Application.Dto.ProductDtos
 {
-    public class ProductAddDTO
+    public class CreateProductDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
