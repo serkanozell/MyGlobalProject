@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Domain.Common;
 using MyGlobalProject.Persistance.Context;
@@ -22,25 +23,19 @@ namespace MyGlobalProject.Persistance.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll() => Table.AsQueryable();
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? expression = null)
+            => expression == null ? Table.AsQueryable() : Table.Where(expression)
+                                                               .AsQueryable();
 
-        #region getall için alternatif olarak kullanılabilir
-        //public List<TEntity> GetAll(Expression<Func<TEntity, bool>> condition = null)
-        //{
-        //    return condition == null
-        //        ? _context.Set<TEntity>().ToList()
-        //        : _context.Set<TEntity>().Where(condition).ToList();
-        //}
-        #endregion
-
-        public IQueryable<T> GetBy(Expression<Func<T, bool>> expression)
+        public IQueryable<T> GetBy(Expression<Func<T, bool>> expression,
+                             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
             return Table.Where(expression);
         }
 
         public async Task<T> GetByIdAsync(Guid id)
         {
-            return await Table.FirstOrDefaultAsync(x => x.Id == id);
+            return await Table.FirstOrDefaultAsync(x => x.Id == id && x.IsActive && !x.IsDeleted);
         }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression)

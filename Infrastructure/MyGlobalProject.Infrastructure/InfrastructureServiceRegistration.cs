@@ -5,7 +5,10 @@ using MyGlobalProject.Application.Features.Categories.Commands.CreateCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory;
 using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
-using MyGlobalProject.Application.Features.Products.Commands;
+using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
+using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
+using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
+using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
 
 namespace MyGlobalProject.Infrastructure
 {
@@ -18,10 +21,14 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<CreateCategoryCommand>, CreateCategoryCommandValidator>();
             services.AddScoped<IValidator<UpdateCategoryCommand>, UpdateCategoryCommandValidator>();
             services.AddScoped<IValidator<DeleteCategoryCommand>, DeleteCategoryCommandValidator>();
-            services.AddScoped<IValidator<GetByIdQuery>, GetByIdCategoryQueryValidator>();
+            services.AddScoped<IValidator<GetByIdCategoryQuery>, GetByIdCategoryQueryValidator>();
 
 
             services.AddScoped<IValidator<CreateProductCommand>, CreateProductCommandValidator>();
+            services.AddScoped<IValidator<UpdateProductCommand>, UpdateProductCommandValidator>();
+            services.AddScoped<IValidator<DeleteProductCommand>, DeleteProductCommandValidatior>();
+            services.AddScoped<IValidator<GetByIdProductQuery>, GetByIdProductQueryValidator>();
+
         }
     }
 }

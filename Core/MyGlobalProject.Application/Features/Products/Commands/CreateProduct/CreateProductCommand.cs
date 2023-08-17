@@ -3,13 +3,8 @@ using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyGlobalProject.Application.Features.Products.Commands
+namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductCommand : IRequest<CreateProductDTO>
     {

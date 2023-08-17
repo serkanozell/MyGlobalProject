@@ -30,7 +30,7 @@ namespace MyGlobalProject.WebAPI.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdQuery getByIdQuery)
+        public async Task<IActionResult> GetById([FromRoute] GetByIdCategoryQuery getByIdQuery)
         {
             var result = await _mediator.Send(getByIdQuery);
 

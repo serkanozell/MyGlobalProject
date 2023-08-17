@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory
 {
-    public class GetByIdCategoryQueryValidator:AbstractValidator<GetByIdQuery>
+    public class GetByIdCategoryQueryValidator:AbstractValidator<GetByIdCategoryQuery>
     {
         public GetByIdCategoryQueryValidator()
         {
