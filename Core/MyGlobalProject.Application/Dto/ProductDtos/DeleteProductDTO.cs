@@ -1,7 +1,8 @@
-﻿namespace MyGlobalProject.Application.Dto.ProductDtos
+﻿using MyGlobalProject.Application.Dto.Common;
+
+namespace MyGlobalProject.Application.Dto.ProductDtos
 {
-    public class DeleteProductDTO
+    public class DeleteProductDTO:BaseDeleteDTO
     {
-        public Guid Id { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿namespace MyGlobalProject.Application.Dto.ProductDtos
+﻿using MyGlobalProject.Application.Dto.Common;
+
+namespace MyGlobalProject.Application.Dto.ProductDtos
 {
-    public class UpdateProductDTO
+    public class UpdateProductDTO : BaseUpdateDTO
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
