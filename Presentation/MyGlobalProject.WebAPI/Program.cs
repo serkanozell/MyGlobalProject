@@ -1,15 +1,19 @@
 
 using MyGlobalProject.Application;
+using MyGlobalProject.Application.Exceptions;
 using MyGlobalProject.Infrastructure;
 using MyGlobalProject.Persistance;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo
+                                                   .File("Logs/log.txt", rollingInterval: RollingInterval.Day)
+                                                   .CreateLogger();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-//builder.Services.AddControllers(opt => opt.Filters.Add<ValidationFilter>()).AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<CreateCategoryCommandValidator>()).ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,6 +22,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistanceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+
+builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
 var app = builder.Build();
 
@@ -29,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseAuthorization();
 

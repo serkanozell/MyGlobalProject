@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
 {
@@ -56,6 +57,8 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
 
                 response.Data = resultProductDTO;
                 response.Message = "Product added to system successfully";
+
+                Log.Information("Product Added");
 
                 return response;
             }
