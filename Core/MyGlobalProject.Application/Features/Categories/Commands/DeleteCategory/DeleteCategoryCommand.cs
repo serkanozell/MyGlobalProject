@@ -2,14 +2,15 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.Wrappers;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory
 {
-    public class DeleteCategoryCommand : IRequest<DeleteCategoryDTO>
+    public class DeleteCategoryCommand : IRequest<GenericResponse<DeleteCategoryDTO>>
     {
         public Guid Id { get; set; }
 
-        public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, DeleteCategoryDTO>
+        public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, GenericResponse<DeleteCategoryDTO>>
         {
             private readonly ICategoryReadRepository _categoryReadRepository;
             private readonly ICategoryWriteRepository _categoryWriteRepository;
@@ -22,9 +23,20 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategor
                 _mapper = mapper;
             }
 
-            public async Task<DeleteCategoryDTO> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<DeleteCategoryDTO>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
             {
+                GenericResponse<DeleteCategoryDTO> response = new();
+
                 var currentCategory = await _categoryReadRepository.GetByIdAsync(request.Id);
+
+                if (currentCategory == null)
+                {
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = "Deleting error";
+
+                    return response;
+                }
 
                 currentCategory!.IsActive = true;
                 currentCategory.IsDeleted = false;
@@ -33,7 +45,10 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategor
 
                 var deletedCategoryDTO = _mapper.Map<DeleteCategoryDTO>(currentCategory);
 
-                return deletedCategoryDTO;
+                response.Data = deletedCategoryDTO;
+                response.Success = true;
+                response.Message = "Category deleted successfully";
+                return response;
             }
         }
     }

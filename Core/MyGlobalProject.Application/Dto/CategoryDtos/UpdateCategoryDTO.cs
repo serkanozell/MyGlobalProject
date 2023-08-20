@@ -9,7 +9,5 @@ namespace MyGlobalProject.Application.Dto.CategoryDtos
 {
     public class UpdateCategoryDTO : BaseUpdateDTO
     {
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

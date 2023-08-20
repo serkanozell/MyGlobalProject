@@ -2,16 +2,17 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategory
 {
 
-    public class CreateCategoryCommand : IRequest<CreateCategoryDTO>
+    public class CreateCategoryCommand : IRequest<GenericResponse<CreateCategoryDTO>>
     {
         public string Name { get; set; }
 
-        public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, CreateCategoryDTO>
+        public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, GenericResponse<CreateCategoryDTO>>
         {
 
             private readonly ICategoryReadRepository _categoryReadRepository;
@@ -26,7 +27,7 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
                 _mapper = mapper;
             }
 
-            public async Task<CreateCategoryDTO> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<CreateCategoryDTO>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
                 var mappedCategory = _mapper.Map<Category>(request);
 
@@ -37,7 +38,14 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
                 var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory);
                 var createdCategoryDTO = _mapper.Map<CreateCategoryDTO>(createdCategory);
 
-                return createdCategoryDTO;
+                GenericResponse<CreateCategoryDTO> response = new GenericResponse<CreateCategoryDTO>()
+                {
+                    Data = createdCategoryDTO,
+                    Success = true,
+                    Message = "Category added successfully"
+                };
+
+                return response;
             }
         }
     }
