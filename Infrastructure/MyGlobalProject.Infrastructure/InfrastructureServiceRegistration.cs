@@ -9,6 +9,7 @@ using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
+using MyGlobalProject.Application.Features.Users.Commands.CreateUser;
 
 namespace MyGlobalProject.Infrastructure
 {
@@ -28,6 +29,8 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<UpdateProductCommand>, UpdateProductCommandValidator>();
             services.AddScoped<IValidator<DeleteProductCommand>, DeleteProductCommandValidatior>();
             services.AddScoped<IValidator<GetByIdProductQuery>, GetByIdProductQueryValidator>();
+
+            services.AddScoped<IValidator<CreateUserCommand>, CreateUserCommandValidator>();
 
         }
     }

@@ -2,7 +2,7 @@
 
 namespace MyGlobalProject.Application.RepositoryInterfaces
 {
-    public interface ICategoryWriteRepository : IWriteRepository<Category>
+    public interface IUserAddressWriteRepository : IWriteRepository<UserAddress>
     {
     }
 }

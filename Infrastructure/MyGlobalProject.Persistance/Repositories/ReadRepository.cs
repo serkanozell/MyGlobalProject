@@ -15,12 +15,10 @@ namespace MyGlobalProject.Persistance.Repositories
     public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity, new()
     {
         private readonly AppDbContext _context;
-
         public ReadRepository(AppDbContext context)
         {
             _context = context;
         }
-
         public DbSet<T> Table => _context.Set<T>();
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>>? expression = null)

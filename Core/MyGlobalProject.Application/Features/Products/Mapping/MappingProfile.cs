@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
 using MyGlobalProject.Application.Features.Products.Queries.GetAllProduct;
+using MyGlobalProject.Application.Features.Products.Queries.GetAllProductByCategoryId;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
 using MyGlobalProject.Domain.Entities;
 
@@ -27,6 +28,8 @@ namespace MyGlobalProject.Application.Features.Products.Mapping
 
             CreateMap<Product, ProductListDTO>().ReverseMap();
             CreateMap<Product, GetAllProductQuery>().ReverseMap();
+
+            CreateMap<Product, GetAllProductByCategoryIdQuery>().ReverseMap();
         }
     }
 }

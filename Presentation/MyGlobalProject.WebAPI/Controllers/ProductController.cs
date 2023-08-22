@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
 using MyGlobalProject.Application.Features.Products.Queries.GetAllProduct;
+using MyGlobalProject.Application.Features.Products.Queries.GetAllProductByCategoryId;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
 
 namespace MyGlobalProject.WebAPI.Controllers
@@ -47,6 +48,14 @@ namespace MyGlobalProject.WebAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _mediator.Send(new GetAllProductQuery());
+
+            return Ok(result);
+        }
+
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> GetAllByCategoryId([FromRoute] GetAllProductByCategoryIdQuery getAllProductByCategoryIdQuery)
+        {
+            var result = await _mediator.Send(getAllProductByCategoryIdQuery);
 
             return Ok(result);
         }
