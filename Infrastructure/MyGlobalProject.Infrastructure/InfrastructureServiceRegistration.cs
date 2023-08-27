@@ -9,7 +9,12 @@ using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
+using MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUserAddress;
+using MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUserAddress;
 using MyGlobalProject.Application.Features.Users.Commands.CreateUser;
+using MyGlobalProject.Application.Features.Users.Commands.DeleteUser;
+using MyGlobalProject.Application.Features.Users.Commands.UpdateUser;
+using MyGlobalProject.Application.Features.Users.Queries.GetByIdUsers;
 
 namespace MyGlobalProject.Infrastructure
 {
@@ -24,13 +29,19 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<DeleteCategoryCommand>, DeleteCategoryCommandValidator>();
             services.AddScoped<IValidator<GetByIdCategoryQuery>, GetByIdCategoryQueryValidator>();
 
-
             services.AddScoped<IValidator<CreateProductCommand>, CreateProductCommandValidator>();
             services.AddScoped<IValidator<UpdateProductCommand>, UpdateProductCommandValidator>();
             services.AddScoped<IValidator<DeleteProductCommand>, DeleteProductCommandValidatior>();
             services.AddScoped<IValidator<GetByIdProductQuery>, GetByIdProductQueryValidator>();
 
             services.AddScoped<IValidator<CreateUserCommand>, CreateUserCommandValidator>();
+            services.AddScoped<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
+            services.AddScoped<IValidator<DeleteUserCommand>, DeleteUserCommandValidator>();
+            services.AddScoped<IValidator<GetByIdUserQuery>, GetByIdUserQueryValidator>();
+
+            services.AddScoped<IValidator<CreateUserAddressCommand>, CreateUserAddressCommandValidator>();
+
+            services.AddScoped<IValidator<DeleteUserAddressCommand>, DeleteUserAddressCommandValidator>();
 
         }
     }

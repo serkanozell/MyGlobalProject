@@ -18,17 +18,12 @@
     <Folder Include="Features\Orders\Mappings\" />
     <Folder Include="Features\Orders\Queries\GetAllOrders\" />
     <Folder Include="Features\Orders\Queries\GetByIdOrder\" />
-    <Folder Include="Features\UserAddresses\Commands\CreateUserAddress\" />
     <Folder Include="Features\UserAddresses\Commands\DeleteUserAddress\" />
     <Folder Include="Features\UserAddresses\Commands\UpdateUserAddress\" />
     <Folder Include="Features\UserAddresses\Mapping\" />
     <Folder Include="Features\UserAddresses\Queries\GetAllUserAddress\" />
     <Folder Include="Features\UserAddresses\Queries\GetByIdUserAddress\" />
     <Folder Include="Features\Users\Commands\CreateUser\" />
-    <Folder Include="Features\Users\Commands\DeleteUser\" />
-    <Folder Include="Features\Users\Commands\UpdateUser\" />
-    <Folder Include="Features\Users\Queries\GetAllUsers\" />
-    <Folder Include="Features\Users\Queries\GetByIdUsers\" />
     <Folder Include="ServiceInterfaces\" />
     <Folder Include="Parameters\" />
   </ItemGroup>
