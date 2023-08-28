@@ -38,10 +38,14 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUser
                     response.Data = null;
                     response.Success = false;
                     response.Message = "No address to delete";
+
+                    return response;
                 }
 
                 currentUserAddress!.IsActive = false;
                 currentUserAddress.IsDeleted = true;
+
+                await _userAddressWriteRepository.UpdateAsync(currentUserAddress);
 
                 var mappedUserAddress = _mapper.Map<DeleteUserAddressDTO>(currentUserAddress);
 

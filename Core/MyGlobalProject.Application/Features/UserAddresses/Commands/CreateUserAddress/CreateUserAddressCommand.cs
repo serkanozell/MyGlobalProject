@@ -17,19 +17,36 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUser
         {
             private readonly IUserAddressReadRepository _userAddressReadRepository;
             private readonly IUserAddressWriteRepository _userAddressWriteRepository;
+            private readonly IUserReadRepository _userReadRepository;
             private readonly IMapper _mapper;
 
-            public CreateUserAddressCommandHandler(IUserAddressReadRepository userAddressReadRepository, IUserAddressWriteRepository userAddressWriteRepository, IMapper mapper)
+            public CreateUserAddressCommandHandler(IUserAddressReadRepository userAddressReadRepository, IUserAddressWriteRepository userAddressWriteRepository, IMapper mapper, IUserReadRepository userReadRepository)
             {
                 _userAddressReadRepository = userAddressReadRepository;
                 _userAddressWriteRepository = userAddressWriteRepository;
+                _userReadRepository = userReadRepository;
                 _mapper = mapper;
             }
 
             public async Task<GenericResponse<CreateUserAddresDTO>> Handle(CreateUserAddressCommand request, CancellationToken cancellationToken)
             {
                 var response = new GenericResponse<CreateUserAddresDTO>();
+
+                var existUser = await _userReadRepository.GetByIdAsync(request.UserId);
+                if (existUser is null)
+                {
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = "Wrong user id";
+
+                    return response;
+                }
+
                 var mappedUserAddress = _mapper.Map<UserAddress>(request);
+
+                mappedUserAddress.IsActive = true;
+                mappedUserAddress.IsDeleted = false;
+                mappedUserAddress.CreatedDate= DateTime.Now;
 
                 var addedUserAddress = await _userAddressWriteRepository.AddAsync(mappedUserAddress);
 

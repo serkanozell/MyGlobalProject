@@ -8,9 +8,13 @@ using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
 using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
+using MyGlobalProject.Application.Features.Products.Queries.GetAllProductByCategoryId;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
 using MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUserAddress;
 using MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUserAddress;
+using MyGlobalProject.Application.Features.UserAddresses.Commands.UpdateUserAddress;
+using MyGlobalProject.Application.Features.UserAddresses.Queries.GetAllUserAddressByUserId;
+using MyGlobalProject.Application.Features.UserAddresses.Queries.GetByIdUserAddress;
 using MyGlobalProject.Application.Features.Users.Commands.CreateUser;
 using MyGlobalProject.Application.Features.Users.Commands.DeleteUser;
 using MyGlobalProject.Application.Features.Users.Commands.UpdateUser;
@@ -33,6 +37,7 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<UpdateProductCommand>, UpdateProductCommandValidator>();
             services.AddScoped<IValidator<DeleteProductCommand>, DeleteProductCommandValidatior>();
             services.AddScoped<IValidator<GetByIdProductQuery>, GetByIdProductQueryValidator>();
+            services.AddScoped<IValidator<GetAllProductByCategoryIdQuery>, GetAllProductByCategoryIdQueryValidator>();
 
             services.AddScoped<IValidator<CreateUserCommand>, CreateUserCommandValidator>();
             services.AddScoped<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
@@ -40,8 +45,10 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<GetByIdUserQuery>, GetByIdUserQueryValidator>();
 
             services.AddScoped<IValidator<CreateUserAddressCommand>, CreateUserAddressCommandValidator>();
-
+            services.AddScoped<IValidator<UpdateUserAddressCommand>, UpdateUserAddressCommandValidator>();
             services.AddScoped<IValidator<DeleteUserAddressCommand>, DeleteUserAddressCommandValidator>();
+            services.AddScoped<IValidator<GetByIdUserAddressQuery>, GetByIdUserAddressQueryValidator>();
+            services.AddScoped<IValidator<GetAllUserAddressByUserIdQuery>, GetAllUserAddressByUserIdQueryValidator>();
 
         }
     }
