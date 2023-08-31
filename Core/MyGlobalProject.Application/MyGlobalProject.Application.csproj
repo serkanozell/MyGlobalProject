@@ -13,11 +13,6 @@
     <Folder Include="Features\OrderItems\Mapping\" />
     <Folder Include="Features\OrderItems\Queries\GetAllOrderItems\" />
     <Folder Include="Features\OrderItems\Queries\GetByIdOrderItems\" />
-    <Folder Include="Features\Orders\Commands\DeleteOrder\" />
-    <Folder Include="Features\Orders\Commands\UpdateOrder\" />
-    <Folder Include="Features\Orders\Mappings\" />
-    <Folder Include="Features\Orders\Queries\GetAllOrders\" />
-    <Folder Include="Features\Orders\Queries\GetByIdOrder\" />
     <Folder Include="Features\Users\Commands\CreateUser\" />
     <Folder Include="ServiceInterfaces\" />
     <Folder Include="Parameters\" />

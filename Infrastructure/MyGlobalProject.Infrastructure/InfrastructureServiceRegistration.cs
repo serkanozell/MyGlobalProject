@@ -5,6 +5,11 @@ using MyGlobalProject.Application.Features.Categories.Commands.CreateCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory;
 using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
+using MyGlobalProject.Application.Features.Orders.Commands.CreateOrder;
+using MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder;
+using MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder;
+using MyGlobalProject.Application.Features.Orders.Queries.GetAllOrderByUserId;
+using MyGlobalProject.Application.Features.Orders.Queries.GetByIdOrder;
 using MyGlobalProject.Application.Features.Products.Commands.CreateProduct;
 using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
@@ -50,6 +55,11 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<GetByIdUserAddressQuery>, GetByIdUserAddressQueryValidator>();
             services.AddScoped<IValidator<GetAllUserAddressByUserIdQuery>, GetAllUserAddressByUserIdQueryValidator>();
 
+            services.AddScoped<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
+            services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
+            services.AddScoped<IValidator<DeleteOrderCommand>, DeleteOrderCommandValidator>();
+            services.AddScoped<IValidator<GetByIdOrderQuery>, GetByIdOrderQueryValidator>();
+            services.AddScoped<IValidator<GetAllOrderByUserIdQuery>, GetAllOrderByUserIdQueryValidator>();
         }
     }
 }

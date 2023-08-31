@@ -30,7 +30,7 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProduct
 
             public async Task<List<ProductListDTO>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
             {
-                var productList = _productReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).Include(p => p.Category).ToList();
+                var productList =await _productReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).Include(p => p.Category).ToListAsync();
 
                 var productListDTO = _mapper.Map<List<ProductListDTO>>(productList);
 
