@@ -34,6 +34,9 @@ namespace MyGlobalProject.Persistance
             services.AddScoped<IUserAddressReadRepository, UserAddressReadRepository>();
             services.AddScoped<IUserAddressWriteRepository, UserAddressWriteRepository>();
 
+            services.AddScoped<IRoleReadRepository, RoleReadRepository>();
+            services.AddScoped<IRoleWriteRepository, RoleWriteRepository>();
+
             return services;
         }
     }

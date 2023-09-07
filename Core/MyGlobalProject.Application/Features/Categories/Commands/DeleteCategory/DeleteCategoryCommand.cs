@@ -38,10 +38,7 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategor
                     return response;
                 }
 
-                currentCategory!.IsActive = true;
-                currentCategory.IsDeleted = false;
-
-                await _categoryWriteRepository.UpdateAsync(currentCategory);
+                await _categoryWriteRepository.DeleteAsync(currentCategory);
 
                 var deletedCategoryDTO = _mapper.Map<DeleteCategoryDTO>(currentCategory);
 

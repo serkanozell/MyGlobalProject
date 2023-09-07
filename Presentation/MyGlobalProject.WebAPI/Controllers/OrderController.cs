@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyGlobalProject.Application.Features.Orders.Commands.CreateOrder;
+using MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithoutRegister;
 using MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder;
 using MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder;
 using MyGlobalProject.Application.Features.Orders.Queries.GetAllOrder;
@@ -24,6 +25,14 @@ namespace MyGlobalProject.WebAPI.Controllers
         public async Task<IActionResult> Add(CreateOrderCommand createOrderCommand)
         {
             var result = await _mediator.Send(createOrderCommand);
+
+            return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddWithoutRegister(CreateOrderWithoutRegisterCommand createOrderWithoutRegisterCommand)
+        {
+            var result = await _mediator.Send(createOrderWithoutRegisterCommand);
 
             return Ok(result);
         }

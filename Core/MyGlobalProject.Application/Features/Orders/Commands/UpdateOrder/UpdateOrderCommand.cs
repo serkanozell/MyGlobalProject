@@ -3,7 +3,6 @@ using MediatR;
 using MyGlobalProject.Application.Dto.OrderDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
-using MyGlobalProject.Domain.Entities;
 
 namespace MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder
 {

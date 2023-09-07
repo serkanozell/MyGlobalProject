@@ -1,16 +1,11 @@
-﻿using MyGlobalProject.Application.Dto.Common;
-using MyGlobalProject.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyGlobalProject.Domain.Enums;
 
 namespace MyGlobalProject.Application.Dto.OrderDtos
 {
     public class CreateOrderDTO
     {
         public Guid? UserId { get; set; }
+        public Guid AddressId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }

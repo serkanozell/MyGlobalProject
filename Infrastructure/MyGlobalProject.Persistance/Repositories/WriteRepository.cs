@@ -23,6 +23,10 @@ namespace MyGlobalProject.Persistance.Repositories
 
         public async Task<T> AddAsync(T entity)
         {
+            entity.IsActive = true;
+            entity.IsDeleted = false;
+            entity.CreatedDate = DateTime.Now;
+
             await Table.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
@@ -30,6 +34,9 @@ namespace MyGlobalProject.Persistance.Repositories
 
         public async Task<T> DeleteAsync(T entity)
         {
+            entity.IsActive = false;
+            entity.IsDeleted = true;
+
             Table.Update(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return entity;

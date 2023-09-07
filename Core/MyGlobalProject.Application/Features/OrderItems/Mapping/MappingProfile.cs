@@ -1,0 +1,24 @@
+﻿using AutoMapper;
+using MyGlobalProject.Application.Dto.OrderItemDtos;
+using MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderItem;
+using MyGlobalProject.Domain.Entities;
+
+namespace MyGlobalProject.Application.Features.OrderItems.Mapping
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<OrderItem, CreateOrderItemDTO>().ReverseMap();
+            CreateMap<OrderItem, CreateOrderItemCommand>().ReverseMap();
+
+            CreateMap<OrderItem, UpdateOrderItemDTO>().ReverseMap();
+            CreateMap<OrderItem, UpdateOrderItemCommand>().ReverseMap();
+
+            CreateMap<OrderItem, DeleteOrderItemDTO>().ReverseMap();
+            CreateMap<OrderItem, DeleteOrderItemCommand>().ReverseMap();
+        }
+    }
+}

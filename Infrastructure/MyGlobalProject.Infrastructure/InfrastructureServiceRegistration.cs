@@ -5,7 +5,12 @@ using MyGlobalProject.Application.Features.Categories.Commands.CreateCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory;
 using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
+using MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItemWithoutRegister;
+using MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderItem;
 using MyGlobalProject.Application.Features.Orders.Commands.CreateOrder;
+using MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithoutRegister;
 using MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder;
 using MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder;
 using MyGlobalProject.Application.Features.Orders.Queries.GetAllOrderByUserId;
@@ -15,6 +20,10 @@ using MyGlobalProject.Application.Features.Products.Commands.DeleteProduct;
 using MyGlobalProject.Application.Features.Products.Commands.UpdateProduct;
 using MyGlobalProject.Application.Features.Products.Queries.GetAllProductByCategoryId;
 using MyGlobalProject.Application.Features.Products.Queries.GetByIdProduct;
+using MyGlobalProject.Application.Features.Roles.Commands.CreateRole;
+using MyGlobalProject.Application.Features.Roles.Commands.DeleteRole;
+using MyGlobalProject.Application.Features.Roles.Commands.UpdateRole;
+using MyGlobalProject.Application.Features.Roles.Queries.GetByIdRole;
 using MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUserAddress;
 using MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUserAddress;
 using MyGlobalProject.Application.Features.UserAddresses.Commands.UpdateUserAddress;
@@ -56,10 +65,21 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<GetAllUserAddressByUserIdQuery>, GetAllUserAddressByUserIdQueryValidator>();
 
             services.AddScoped<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
+            services.AddScoped<IValidator<CreateOrderWithoutRegisterCommand>, CreateOrderWithoutRegisterCommandValidator>();
             services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
             services.AddScoped<IValidator<DeleteOrderCommand>, DeleteOrderCommandValidator>();
             services.AddScoped<IValidator<GetByIdOrderQuery>, GetByIdOrderQueryValidator>();
             services.AddScoped<IValidator<GetAllOrderByUserIdQuery>, GetAllOrderByUserIdQueryValidator>();
+
+            services.AddScoped<IValidator<CreateOrderItemCommand>, CreateOrderItemCommandValidator>();
+            services.AddScoped<IValidator<CreateOrderItemWithoutRegisterCommand>, CreateOrderItemWithoutRegisterCommandValidator>();
+            services.AddScoped<IValidator<UpdateOrderItemCommand>, UpdateOrderItemCommandValidator>();
+            services.AddScoped<IValidator<DeleteOrderItemCommand>, DeleteOrderItemCommandValidator>();
+
+            services.AddScoped<IValidator<CreateRoleCommand>, CreateRoleCommandValidator>();
+            services.AddScoped<IValidator<UpdateRoleCommand>, UpdateRoleCommandValidator>();
+            services.AddScoped<IValidator<DeleteRoleCommand>, DeleteRoleCommandValidator>();
+            services.AddScoped<IValidator<GetByIdRoleQuery>, GetByIdRoleQueryValidator>();
         }
     }
 }

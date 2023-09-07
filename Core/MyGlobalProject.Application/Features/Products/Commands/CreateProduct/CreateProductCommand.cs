@@ -13,7 +13,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
         public string Name { get; set; }
         public string Description { get; set; }
         public int Stock { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public Guid CategoryId { get; set; }
 
         public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, GenericResponse<CreateProductDTO>>
@@ -35,10 +35,6 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
                 var response = new GenericResponse<CreateProductDTO>();
 
                 var mappedProduct = _mapper.Map<Product>(request);
-
-                mappedProduct.IsActive = true;
-                mappedProduct.IsDeleted = false;
-                mappedProduct.CreatedDate = DateTime.Now;
 
                 var isCategoryExist = await _categoryReadRepository.GetByIdAsync(mappedProduct.CategoryId);
 

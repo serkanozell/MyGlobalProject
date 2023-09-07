@@ -44,10 +44,6 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUser
 
                 var mappedUserAddress = _mapper.Map<UserAddress>(request);
 
-                mappedUserAddress.IsActive = true;
-                mappedUserAddress.IsDeleted = false;
-                mappedUserAddress.CreatedDate= DateTime.Now;
-
                 var addedUserAddress = await _userAddressWriteRepository.AddAsync(mappedUserAddress);
 
                 var mappedResultUserAddress = _mapper.Map<CreateUserAddresDTO>(addedUserAddress);

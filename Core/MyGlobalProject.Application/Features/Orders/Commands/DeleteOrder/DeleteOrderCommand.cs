@@ -38,10 +38,7 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder
                     return response;
                 }
 
-                currentOrder.IsActive = false;
-                currentOrder.IsDeleted = true;
-
-                var updatedOrderDto = await _orderWriteRepository.UpdateAsync(currentOrder);
+                var updatedOrderDto = await _orderWriteRepository.DeleteAsync(currentOrder);
 
                 var deletedOrderDto = _mapper.Map<DeleteOrderDTO>(updatedOrderDto);
 

@@ -42,10 +42,7 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUser
                     return response;
                 }
 
-                currentUserAddress!.IsActive = false;
-                currentUserAddress.IsDeleted = true;
-
-                await _userAddressWriteRepository.UpdateAsync(currentUserAddress);
+                await _userAddressWriteRepository.DeleteAsync(currentUserAddress);
 
                 var mappedUserAddress = _mapper.Map<DeleteUserAddressDTO>(currentUserAddress);
 

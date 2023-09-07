@@ -36,10 +36,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.DeleteUser
                     response.Message = "There is no user to delete";
                 }
 
-                currentUser!.IsActive = false;
-                currentUser.IsDeleted = true;
-
-                await _userWriteRepository.UpdateAsync(currentUser);
+                await _userWriteRepository.DeleteAsync(currentUser);
 
                 var mappedUser = _mapper.Map<DeleteUserDTO>(currentUser);
 

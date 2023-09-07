@@ -31,10 +31,6 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
             {
                 var mappedCategory = _mapper.Map<Category>(request);
 
-                mappedCategory.IsActive = true;
-                mappedCategory.IsDeleted = false;
-                mappedCategory.CreatedDate = DateTime.Now;
-
                 var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory);
                 var createdCategoryDTO = _mapper.Map<CreateCategoryDTO>(createdCategory);
 

@@ -3,12 +3,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Domain.Common;
 using MyGlobalProject.Persistance.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyGlobalProject.Persistance.Repositories
 {

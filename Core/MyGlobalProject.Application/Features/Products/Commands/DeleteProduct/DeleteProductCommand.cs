@@ -38,10 +38,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
                     return response;
                 }
 
-                currentProduct.IsActive = false;
-                currentProduct.IsDeleted = true;
-
-                await _productWriteRepository.UpdateAsync(currentProduct);
+                await _productWriteRepository.DeleteAsync(currentProduct);
 
                 var deleteProductDTO = _mapper.Map<DeleteProductDTO>(currentProduct);
 

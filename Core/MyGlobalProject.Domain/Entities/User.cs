@@ -10,7 +10,9 @@ namespace MyGlobalProject.Domain.Entities
         public string Password { get; set; }
         public string EMail { get; set; }
         public string PhoneNumber { get; set; }
+        public Guid RoleId { get; set; }
 
-        public ICollection<UserAddress> Address { get; set; }
+        public virtual ICollection<UserAddress> Address { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

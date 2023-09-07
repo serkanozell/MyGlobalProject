@@ -13,6 +13,7 @@ namespace MyGlobalProject.Persistance.Context
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
         {
