@@ -2,11 +2,6 @@
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Domain.Common;
 using MyGlobalProject.Persistance.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyGlobalProject.Persistance.Repositories
 {
@@ -32,6 +27,20 @@ namespace MyGlobalProject.Persistance.Repositories
             return entity;
         }
 
+        public async Task<List<T>> AddRangeAsync(List<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.IsActive = true;
+                entity.IsDeleted = false;
+                entity.CreatedDate = DateTime.Now;
+
+                await Table.AddAsync(entity);
+            }
+            await _context.SaveChangesAsync();
+            return entities;
+        }
+
         public async Task<T> DeleteAsync(T entity)
         {
             entity.IsActive = false;
@@ -40,6 +49,19 @@ namespace MyGlobalProject.Persistance.Repositories
             Table.Update(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return entity;
+        }
+
+        public async Task<List<T>> DeleteRangeAsync(List<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.IsActive = false;
+                entity.IsDeleted = true;
+
+                Table.Update(entity).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
+            return entities;
         }
 
         public async Task<T> UpdateAsync(T entity)

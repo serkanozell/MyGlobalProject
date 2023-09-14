@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\OrderItems\Commands\DeleteOrderItemByOrderId\" />
-    <Folder Include="Features\OrderItems\Queries\GetAllOrderItem\" />
-    <Folder Include="Features\OrderItems\Queries\GetByIdOrderItem\" />
     <Folder Include="Features\Users\Commands\CreateUser\" />
     <Folder Include="ServiceInterfaces\" />
     <Folder Include="Parameters\" />

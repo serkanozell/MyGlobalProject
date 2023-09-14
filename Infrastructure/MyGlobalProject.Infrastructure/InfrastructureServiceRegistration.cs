@@ -8,7 +8,10 @@ using MyGlobalProject.Application.Features.Categories.Queries.GetByIdCategory;
 using MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItem;
 using MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItemWithoutRegister;
 using MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItemByOrderId;
 using MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderItem;
+using MyGlobalProject.Application.Features.OrderItems.Queries.GetAllOrderItemByOrderId;
+using MyGlobalProject.Application.Features.OrderItems.Queries.GetByIdOrderItem;
 using MyGlobalProject.Application.Features.Orders.Commands.CreateOrder;
 using MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithoutRegister;
 using MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder;
@@ -75,6 +78,9 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<CreateOrderItemWithoutRegisterCommand>, CreateOrderItemWithoutRegisterCommandValidator>();
             services.AddScoped<IValidator<UpdateOrderItemCommand>, UpdateOrderItemCommandValidator>();
             services.AddScoped<IValidator<DeleteOrderItemCommand>, DeleteOrderItemCommandValidator>();
+            services.AddScoped<IValidator<DeleteOrderItemByOrderIdCommand>, DeleteOrderItemByOrderIdCommandValidator>();
+            services.AddScoped<IValidator<GetByIdOrderItemQuery>, GetByIdOrderItemQueryValidator>();
+            services.AddScoped<IValidator<GetAllOrderItemByOrderIdQuery>, GetAllOrderItemByOrderIdQueryValidator>();
 
             services.AddScoped<IValidator<CreateRoleCommand>, CreateRoleCommandValidator>();
             services.AddScoped<IValidator<UpdateRoleCommand>, UpdateRoleCommandValidator>();
