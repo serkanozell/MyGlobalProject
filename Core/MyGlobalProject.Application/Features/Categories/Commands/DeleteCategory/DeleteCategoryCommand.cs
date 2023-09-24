@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory
 {
@@ -45,6 +46,9 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategor
                 response.Data = deletedCategoryDTO;
                 response.Success = true;
                 response.Message = "Category deleted successfully";
+
+                Log.Information($"Category deleted. Id = {deletedCategoryDTO.Id}");
+
                 return response;
             }
         }

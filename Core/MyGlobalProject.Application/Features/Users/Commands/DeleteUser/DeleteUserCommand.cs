@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Users.Commands.DeleteUser
 {
@@ -42,6 +43,8 @@ namespace MyGlobalProject.Application.Features.Users.Commands.DeleteUser
 
                 response.Data = mappedUser;
                 response.Message = "User deleted successfully";
+
+                Log.Information($"User deleted. UserId = {mappedUser.Id}");
 
                 return response;
             }

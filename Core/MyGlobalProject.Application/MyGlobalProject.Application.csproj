@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Features\Users\Commands\CreateUser\" />
-    <Folder Include="ServiceInterfaces\" />
     <Folder Include="Parameters\" />
+    <Folder Include="ServiceInterfaces\" />
   </ItemGroup>
 
   <ItemGroup>

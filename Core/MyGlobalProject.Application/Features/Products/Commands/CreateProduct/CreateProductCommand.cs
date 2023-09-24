@@ -54,7 +54,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
                 response.Data = resultProductDTO;
                 response.Message = "Product added to system successfully";
 
-                Log.Information("Product Added");
+                Log.Information($"Product created. ProductId = {createdProduct.Id}");
 
                 return response;
             }

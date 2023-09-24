@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.UserAddressDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.UserAddresses.Commands.UpdateUserAddress
 {
@@ -50,6 +51,10 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.UpdateUser
 
                 response.Data = updatedUserAddressDto;
                 response.Message = "Updated successfully";
+
+                Log.Information($"UserAddress updated. \n" +
+                    $"Old address = {currentUserAddress.Address} - New Address = {updatedUserAddressDto.Address} \n" +
+                    $"Old AddressTitle = {currentUserAddress.AddressTitle} - New AddressTitle = {updatedUserAddressDto.AddressTitle}");
 
                 return response;
             }

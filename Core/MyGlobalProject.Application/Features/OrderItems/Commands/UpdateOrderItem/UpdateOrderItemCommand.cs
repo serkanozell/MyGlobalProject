@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.OrderItemDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderItem
 {
@@ -81,6 +82,8 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderIt
 
                 response.Data = updatedOrderItemDto;
                 response.Message = "Success";
+
+                Log.Information($"Order item updated. Id = {updatedOrderItem.Id}, ProductId = {updatedOrderItem.ProductId}, Quantity = {updatedOrderItem.Quantity}, Price = {updatedOrderItem.Price}");
 
                 return response;
             }

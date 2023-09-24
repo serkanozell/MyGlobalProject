@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategory
 {
@@ -40,6 +41,8 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
                     Success = true,
                     Message = "Category added successfully"
                 };
+
+                Log.Information($"Category Added. Id = {createdCategory.Id}, Name = {createdCategory.Name}, Date = {createdCategory.CreatedDate}");
 
                 return response;
             }

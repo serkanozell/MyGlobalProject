@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.OrderDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder
 {
@@ -44,6 +45,8 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.DeleteOrder
 
                 response.Data = deletedOrderDto;
                 response.Message = "Success";
+
+                Log.Information($"Order deleted. OrderId = {deletedOrderDto.Id}");
 
                 return response;
             }

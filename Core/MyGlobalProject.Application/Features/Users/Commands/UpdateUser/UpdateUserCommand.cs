@@ -5,6 +5,7 @@ using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
 {
@@ -14,7 +15,6 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
         public string EMail { get; set; }
         public string PhoneNumber { get; set; }
 
@@ -61,7 +61,6 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
                 currentUser.FirstName = mappedUser.FirstName;
                 currentUser.LastName = mappedUser.LastName;
                 currentUser.UserName = mappedUser.UserName;
-                currentUser.Password = mappedUser.Password;
                 currentUser.EMail = mappedUser.EMail;
                 currentUser.PhoneNumber = mappedUser.PhoneNumber;
 
@@ -72,6 +71,12 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
                 response.Data = userResult;
                 response.Success = true;
                 response.Message = "User updated successfully";
+
+                Log.Information($"User updated. \n" +
+                    $"Old FirstName = {currentUser.FirstName} - New FirstName = {userResult.FirstName} \n" +
+                    $"Old LastName = {currentUser.LastName} - New LastName = {userResult.LastName} \n" +
+                    $"Old Email = {currentUser.EMail} - New Email = {userResult.EMail} \n" +
+                    $"Old PhoneNumber = {currentUser.PhoneNumber} - Old PhoneNumber = {userResult.PhoneNumber}");
 
                 return response;
             }

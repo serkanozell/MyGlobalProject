@@ -5,6 +5,7 @@ using MyGlobalProject.Application.Dto.OrderItemDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItemByOrderId
 {
@@ -34,7 +35,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
                 var response = new GenericResponse<List<DeleteOrderItemByOrderIdDTO>>();
 
                 var currentOrder = await _orderReadRepository.GetByIdAsync(request.OrderId);
-                
+
                 if (currentOrder is null)
                 {
                     response.Data = null;
@@ -63,6 +64,8 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
 
                 response.Data = mappedDeletedOrderItemsDto;
                 response.Message = "Success";
+
+                Log.Information($"Deleted order items = {deletedOrderItems.Select(x => x.Id)}");
 
                 return response;
             }

@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Products.Commands.UpdateProduct
 {
@@ -54,6 +55,15 @@ namespace MyGlobalProject.Application.Features.Products.Commands.UpdateProduct
 
                 response.Data = mappedProduct;
                 response.Message = "Product updated successfully";
+
+                Log.Information($"Product updated. \n" +
+                    $"Product Id = {currentProduct.Id} \n" +
+                    $"Old name = {currentProduct.Name} - New name = {request.Name} \n" +
+                    $"$Old description = {currentProduct.Description} - New description = {request.Description} \n" +
+                    $"$Old stock = {currentProduct.Stock} - New stock = {request.Stock} \n" +
+                    $"$Old price = {currentProduct.Price} - New price = {request.Price} \n" +
+                    $"$Old categoryId = {currentProduct.CategoryId} - New categoryId = {request.CategoryId}"
+                    );
 
                 return response;
             }

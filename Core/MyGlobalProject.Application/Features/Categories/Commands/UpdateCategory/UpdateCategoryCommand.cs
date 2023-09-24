@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory
 {
@@ -53,6 +54,8 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.UpdateCategor
                 //var mappedCategory = _mapper.Map<Category>(request);
                 //var updatedCategory = await _categoryRepository.Update(mappedCategory);
                 //var updatedCategoryDTO = _mapper.Map<UpdateCategoryDTO>(updatedCategory);
+
+                Log.Information($"Category updated. Old name = {currentCategory.Name}. New name = {updatedCategoryDTO.Name}");
 
                 return response;
             }

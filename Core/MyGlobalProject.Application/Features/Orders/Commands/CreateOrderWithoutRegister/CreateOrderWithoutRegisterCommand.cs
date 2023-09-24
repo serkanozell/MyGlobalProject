@@ -5,6 +5,7 @@ using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using MyGlobalProject.Domain.Enums;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithoutRegister
 {
@@ -42,6 +43,8 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithou
 
                 response.Data = resultCreatedOrder;
                 response.Message = "Your order has been received";
+
+                Log.Information($"Order created withoud registered. OrderId = {createdOrder.Id}");
 
                 return response;
             }

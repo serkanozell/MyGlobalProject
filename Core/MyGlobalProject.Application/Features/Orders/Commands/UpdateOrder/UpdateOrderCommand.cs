@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.OrderDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder
 {
@@ -56,6 +57,15 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder
 
                 response.Data = updatedOrderDto;
                 response.Message = "Order updated successfully";
+
+                Log.Information($"Order updated. " +
+                    $"OrderId = {updatedOrder.Id}" +
+                    $"Old FirstName = {currentOrder.FirstName} - New FirstName = {updatedOrder.FirstName} \n" +
+                    $"Old LastName = {currentOrder.LastName} - New LastName = {updatedOrder.LastName} \n" +
+                    $"Old Email = {currentOrder.EMail} - New EMail = {updatedOrder.EMail} \n" +
+                    $"Old Address = {currentOrder.Address} - New Address = {updatedOrder.Address} \n" +
+                    $"Old AddressTitle = {currentOrder.AddressTitle} - New AddressTitle = {updatedOrder.AddressTitle} \n" +
+                    $"Old PhoneNumber = {currentOrder.PhoneNumber} - New PhoneNumber = {updatedOrder.PhoneNumber}");
 
                 return response;
             }

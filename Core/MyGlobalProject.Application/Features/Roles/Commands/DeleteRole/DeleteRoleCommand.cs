@@ -5,6 +5,7 @@ using MyGlobalProject.Application.Dto.RoleDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Roles.Commands.DeleteRole
 {
@@ -48,6 +49,8 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.DeleteRole
 
                 response.Data = deletedRoleDto;
                 response.Message = "Success";
+
+                Log.Information($"Role deleted. RoleId = {deletedRole.Id}");
 
                 return response;
             }

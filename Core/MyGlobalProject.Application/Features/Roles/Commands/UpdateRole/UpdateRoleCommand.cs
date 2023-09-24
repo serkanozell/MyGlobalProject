@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.RoleDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Roles.Commands.UpdateRole
 {
@@ -50,6 +51,9 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.UpdateRole
 
                 response.Data = updatedRoleDto;
                 response.Message = "Success";
+
+                Log.Information($"Role Updated. \n" +
+                    $"Old name = {currentRole.Name} - New name = {updatedRole.Name}");
 
                 return response;
             }

@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.RoleDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Roles.Commands.CreateRole
 {
@@ -33,6 +34,8 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.CreateRole
 
                 response.Data = addedRoleDto;
                 response.Message = "Success";
+
+                Log.Information($"Role added. RoleId = {addedRole.Id}");
 
                 return response;
             }

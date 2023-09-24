@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.UserAddressDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUserAddress
 {
@@ -50,6 +51,8 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUser
 
                 response.Data = mappedResultUserAddress;
                 response.Message = "Success";
+
+                Log.Information($"User address created. UserId = {addedUserAddress.Id}");
 
                 return response;
             }

@@ -6,6 +6,7 @@ using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using MyGlobalProject.Domain.Enums;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItem
 {
@@ -99,6 +100,8 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderIt
                 response.Data.Address = currentUserAddress.Address;
                 response.Data.OrderCreateDate = newOrder.OrderCreateDate;
                 response.Message = "Success";
+
+                Log.Information($"Order created. \n UserId = {currentUser.Id}. Order Id = {newOrder.Id}");
 
                 return response;
             }

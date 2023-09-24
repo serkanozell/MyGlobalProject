@@ -5,6 +5,7 @@ using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using MyGlobalProject.Domain.Enums;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderItemWithoutRegister
 {
@@ -78,6 +79,8 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderIt
                 response.Data.Address = request.Address;
                 response.Data.OrderCreateDate = newOrder.OrderCreateDate;
                 response.Message = "Success";
+
+                Log.Information($"Order created without registered user. Order Id = {newOrder.Id}");
 
                 return response;
             }

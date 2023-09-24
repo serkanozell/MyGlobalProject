@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
 {
@@ -44,6 +45,8 @@ namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
 
                 response.Data = deleteProductDTO;
                 response.Message = "Success";
+
+                Log.Information($"Product deleted. ProductId = {deleteProductDTO.Id}");
 
                 return response;
             }

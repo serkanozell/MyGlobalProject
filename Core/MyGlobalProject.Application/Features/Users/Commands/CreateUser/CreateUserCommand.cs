@@ -5,6 +5,7 @@ using MyGlobalProject.Application.Extensions;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 using static System.Net.WebUtility;
 
 namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
@@ -61,6 +62,8 @@ namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
                 response.Data = resultUserDTO;
                 response.Success = true;
                 response.Message = "Successfull";
+
+                Log.Information($"User created. UserId ={createdUser.Id}");
 
                 return response;
             }

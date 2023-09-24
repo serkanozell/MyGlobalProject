@@ -4,6 +4,7 @@ using MyGlobalProject.Application.Dto.OrderItemDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderItem
 {
@@ -47,6 +48,8 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
 
                 response.Data = deletedOrderItemDto;
                 response.Message = "Deleted successfully";
+
+                Log.Information($"Order item deleted. Order Id = {deletedOrderItem.Id}");
 
                 return response;
             }

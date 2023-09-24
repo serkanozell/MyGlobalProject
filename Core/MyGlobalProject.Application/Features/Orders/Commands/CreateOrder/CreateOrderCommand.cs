@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using MyGlobalProject.Application.Dto.OrderDtos;
-using MyGlobalProject.Application.Dto.OrderItemDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using MyGlobalProject.Domain.Enums;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrder
 {
@@ -76,6 +76,8 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrder
 
                 response.Data = resultOrderDto;
                 response.Message = "Your order has been received";
+
+                Log.Information($"Order created. Id = {createdOrder.Id}");
 
                 return response;
             }

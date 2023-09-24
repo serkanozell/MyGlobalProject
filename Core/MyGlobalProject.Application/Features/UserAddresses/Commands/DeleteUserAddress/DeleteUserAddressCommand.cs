@@ -3,11 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.UserAddressDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.Wrappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Serilog;
 
 namespace MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUserAddress
 {
@@ -48,6 +44,8 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUser
 
                 response.Data = mappedUserAddress;
                 response.Message = "Deleted successfully";
+
+                Log.Information($"User address deleted. UserAddressId = {currentUserAddress.Id}");
 
                 return response;
             }
