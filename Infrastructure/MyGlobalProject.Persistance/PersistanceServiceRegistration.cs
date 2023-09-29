@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Persistance.Context;
 using MyGlobalProject.Persistance.Repositories;
+
 
 namespace MyGlobalProject.Persistance
 {
@@ -16,7 +18,9 @@ namespace MyGlobalProject.Persistance
                 options.UseSqlServer(configuration.GetConnectionString("SqlConn"));
             });
 
+            //services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+            services.Decorate<ICategoryReadRepository, CachedCategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 
             services.AddScoped<IOrderReadRepository, OrderReadRepository>();
@@ -36,6 +40,14 @@ namespace MyGlobalProject.Persistance
 
             services.AddScoped<IRoleReadRepository, RoleReadRepository>();
             services.AddScoped<IRoleWriteRepository, RoleWriteRepository>();
+
+            services.AddMemoryCache();
+            services.AddStackExchangeRedisCache(redisOptions =>
+            {
+                string connection = configuration.GetConnectionString("Redis")!;
+
+                redisOptions.Configuration = connection;
+            });
 
             return services;
         }
