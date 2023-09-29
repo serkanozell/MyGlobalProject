@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using Serilog;
@@ -23,12 +24,14 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
             private readonly IUserReadRepository _userReadRepository;
             private readonly IUserWriteRepository _userWriteRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public UpdateUserCommandHandler(IUserReadRepository userReadRepository, IMapper mapper, IUserWriteRepository userWriteRepository)
+            public UpdateUserCommandHandler(IUserReadRepository userReadRepository, IMapper mapper, IUserWriteRepository userWriteRepository, ICacheService cacheService)
             {
                 _userReadRepository = userReadRepository;
                 _userWriteRepository = userWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<UpdateUserDTO>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -77,6 +80,8 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
                     $"Old LastName = {currentUser.LastName} - New LastName = {userResult.LastName} \n" +
                     $"Old Email = {currentUser.EMail} - New Email = {userResult.EMail} \n" +
                     $"Old PhoneNumber = {currentUser.PhoneNumber} - Old PhoneNumber = {userResult.PhoneNumber}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

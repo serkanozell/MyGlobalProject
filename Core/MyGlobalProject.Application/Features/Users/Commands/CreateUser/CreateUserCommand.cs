@@ -3,6 +3,7 @@ using MediatR;
 using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.Extensions;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using Serilog;
@@ -26,12 +27,15 @@ namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
             private readonly IUserWriteRepository _userWriteRepository;
             private readonly IRoleReadRepository _roleReadRepository;
             private readonly IMapper _mapper;
-            public CreateUserCommandHandler(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IMapper mapper, IRoleReadRepository roleReadRepository)
+            private readonly ICacheService _cacheService;
+
+            public CreateUserCommandHandler(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IMapper mapper, IRoleReadRepository roleReadRepository, ICacheService cacheService)
             {
                 _userReadRepository = userReadRepository;
                 _userWriteRepository = userWriteRepository;
                 _roleReadRepository = roleReadRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<CreateUserDTO>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -64,6 +68,8 @@ namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
                 response.Message = "Successfull";
 
                 Log.Information($"User created. UserId ={createdUser.Id}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 
 namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProduct
 {
@@ -19,20 +20,29 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProduct
             private readonly IProductReadRepository _productReadRepository;
             private readonly IProductWriteRepository _productWriteRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public GetAllProductQueryHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper)
+            public GetAllProductQueryHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ICacheService cacheService)
             {
                 _productReadRepository = productReadRepository;
                 _productWriteRepository = productWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
 
             public async Task<List<ProductListDTO>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
             {
-                var productList =await _productReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).Include(p => p.Category).ToListAsync();
+                List<ProductListDTO>? productListDTOs = await _cacheService.GetAsync<List<ProductListDTO>>("products");
+
+                if (productListDTOs is not null)
+                    return productListDTOs;
+
+                var productList = await _productReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).Include(p => p.Category).ToListAsync();
 
                 var productListDTO = _mapper.Map<List<ProductListDTO>>(productList);
+
+                await _cacheService.SetAsync("products", productListDTO);
 
                 return productListDTO;
             }

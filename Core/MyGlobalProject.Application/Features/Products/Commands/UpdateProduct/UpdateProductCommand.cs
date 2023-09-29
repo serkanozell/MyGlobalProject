@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using Serilog;
 
@@ -21,11 +22,13 @@ namespace MyGlobalProject.Application.Features.Products.Commands.UpdateProduct
             private readonly IProductReadRepository _productReadRepository;
             private readonly IProductWriteRepository _productWriteRepository;
             private readonly IMapper _mapper;
-            public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper)
+            private readonly ICacheService _cacheService;
+            public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ICacheService cacheService)
             {
                 _productReadRepository = productReadRepository;
                 _productWriteRepository = productWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<UpdateProductDTO>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
@@ -64,6 +67,8 @@ namespace MyGlobalProject.Application.Features.Products.Commands.UpdateProduct
                     $"$Old price = {currentProduct.Price} - New price = {request.Price} \n" +
                     $"$Old categoryId = {currentProduct.CategoryId} - New categoryId = {request.CategoryId}"
                     );
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

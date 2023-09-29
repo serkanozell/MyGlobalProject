@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using Serilog;
 
@@ -16,12 +17,14 @@ namespace MyGlobalProject.Application.Features.Users.Commands.DeleteUser
             private readonly IUserReadRepository _userReadRepository;
             private readonly IUserWriteRepository _userWriteRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public DeleteUserCommandHandler(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IMapper mapper)
+            public DeleteUserCommandHandler(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IMapper mapper, ICacheService cacheService)
             {
                 _userReadRepository = userReadRepository;
                 _userWriteRepository = userWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<DeleteUserDTO>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
@@ -45,6 +48,8 @@ namespace MyGlobalProject.Application.Features.Users.Commands.DeleteUser
                 response.Message = "User deleted successfully";
 
                 Log.Information($"User deleted. UserId = {mappedUser.Id}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

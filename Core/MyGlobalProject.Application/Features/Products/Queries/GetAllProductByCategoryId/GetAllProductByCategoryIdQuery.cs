@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 
 namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProductByCategoryId
@@ -16,20 +17,30 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProductByC
             private readonly IProductReadRepository _productReadRepository;
             private readonly ICategoryReadRepository _categoryReadRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public GetAllProductByCategoryIdQueryHandler(IProductReadRepository productReadRepository, IMapper mapper, ICategoryReadRepository categoryReadRepository)
+            public GetAllProductByCategoryIdQueryHandler(IProductReadRepository productReadRepository, IMapper mapper, ICategoryReadRepository categoryReadRepository, ICacheService cacheService)
             {
                 _productReadRepository = productReadRepository;
                 _categoryReadRepository = categoryReadRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<List<ProductListDTO>>> Handle(GetAllProductByCategoryIdQuery request, CancellationToken cancellationToken)
             {
                 var response = new GenericResponse<List<ProductListDTO>>();
+                List<ProductListDTO> productListDTOs = await _cacheService.GetAsync<List<ProductListDTO>>($"productsbycategoryid-{request.Id}");
+
+                if (productListDTOs is not null)
+                {
+                    response.Data = productListDTOs;
+                    response.Message = "Success";
+                    return response;
+                }
 
                 var existCategory = _categoryReadRepository.GetByIdAsync(request.Id);
-                
+
                 if (existCategory is null)
                 {
                     response.Data = null;
@@ -45,6 +56,8 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProductByC
 
                 response.Data = mappedProductListDTO;
                 response.Message = "Success";
+
+                await _cacheService.SetAsync($"productsbycategoryid-{request.Id}", mappedProductListDTO);
 
                 return response;
             }

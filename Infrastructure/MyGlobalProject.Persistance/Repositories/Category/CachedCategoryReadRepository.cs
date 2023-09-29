@@ -46,7 +46,7 @@ namespace MyGlobalProject.Persistance.Repositories
                 if (category is null)
                     return category;
 
-                await _distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(category));
+                await _distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(category), options: new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(30) }); ;
 
                 return category;
             }

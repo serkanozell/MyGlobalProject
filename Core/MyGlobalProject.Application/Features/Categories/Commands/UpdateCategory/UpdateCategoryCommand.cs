@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.CategoryDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using Serilog;
 
@@ -18,12 +19,14 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.UpdateCategor
             private readonly ICategoryReadRepository _categoryReadRepository;
             private readonly ICategoryWriteRepository _categoryWriteRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper)
+            public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper, ICacheService cacheService)
             {
                 _categoryReadRepository = categoryReadRepository;
                 _categoryWriteRepository = categoryWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<UpdateCategoryDTO>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
@@ -56,6 +59,8 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.UpdateCategor
                 //var updatedCategoryDTO = _mapper.Map<UpdateCategoryDTO>(updatedCategory);
 
                 Log.Information($"Category updated. Old name = {currentCategory.Name}. New name = {updatedCategoryDTO.Name}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

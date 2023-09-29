@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using Serilog;
@@ -22,12 +23,14 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
             private readonly IProductWriteRepository _productWriteRepository;
             private readonly ICategoryReadRepository _categoryReadRepository;
             private readonly IMapper _mapper;
-            public CreateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ICategoryReadRepository categoryReadRepository)
+            private readonly ICacheService _cacheService;
+            public CreateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ICategoryReadRepository categoryReadRepository, ICacheService cacheService)
             {
                 _productReadRepository = productReadRepository;
                 _productWriteRepository = productWriteRepository;
                 _mapper = mapper;
                 _categoryReadRepository = categoryReadRepository;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<CreateProductDTO>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -55,6 +58,8 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
                 response.Message = "Product added to system successfully";
 
                 Log.Information($"Product created. ProductId = {createdProduct.Id}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }

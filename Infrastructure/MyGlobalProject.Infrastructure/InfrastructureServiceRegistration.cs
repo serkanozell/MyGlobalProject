@@ -36,6 +36,8 @@ using MyGlobalProject.Application.Features.Users.Commands.CreateUser;
 using MyGlobalProject.Application.Features.Users.Commands.DeleteUser;
 using MyGlobalProject.Application.Features.Users.Commands.UpdateUser;
 using MyGlobalProject.Application.Features.Users.Queries.GetByIdUsers;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
+using MyGlobalProject.Infrastructure.Caching;
 
 namespace MyGlobalProject.Infrastructure
 {
@@ -86,6 +88,9 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<UpdateRoleCommand>, UpdateRoleCommandValidator>();
             services.AddScoped<IValidator<DeleteRoleCommand>, DeleteRoleCommandValidator>();
             services.AddScoped<IValidator<GetByIdRoleQuery>, GetByIdRoleQueryValidator>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSingleton<ICacheService, CacheService>();
         }
     }
 }

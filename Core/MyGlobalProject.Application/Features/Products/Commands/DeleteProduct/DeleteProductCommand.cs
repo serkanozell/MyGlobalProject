@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.ProductDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using Serilog;
 
@@ -16,12 +17,14 @@ namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
             private readonly IProductReadRepository _productReadRepository;
             private readonly IProductWriteRepository _productWriteRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public DeleteProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper)
+            public DeleteProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ICacheService cacheService)
             {
                 _productReadRepository = productReadRepository;
                 _productWriteRepository = productWriteRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<DeleteProductDTO>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
@@ -47,6 +50,8 @@ namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
                 response.Message = "Success";
 
                 Log.Information($"Product deleted. ProductId = {deleteProductDTO.Id}");
+
+                await _cacheService.RemoveAllKeysAsync();
 
                 return response;
             }
