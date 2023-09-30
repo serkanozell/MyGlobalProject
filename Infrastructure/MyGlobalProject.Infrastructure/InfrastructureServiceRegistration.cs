@@ -37,7 +37,9 @@ using MyGlobalProject.Application.Features.Users.Commands.DeleteUser;
 using MyGlobalProject.Application.Features.Users.Commands.UpdateUser;
 using MyGlobalProject.Application.Features.Users.Queries.GetByIdUsers;
 using MyGlobalProject.Application.ServiceInterfaces.Caching;
+using MyGlobalProject.Application.ServiceInterfaces.Notification;
 using MyGlobalProject.Infrastructure.Caching;
+using MyGlobalProject.Infrastructure.Notification;
 
 namespace MyGlobalProject.Infrastructure
 {
@@ -91,6 +93,7 @@ namespace MyGlobalProject.Infrastructure
 
             services.AddDistributedMemoryCache();
             services.AddSingleton<ICacheService, CacheService>();
+            services.AddScoped<IEmailSender,EmailSender>();
         }
     }
 }

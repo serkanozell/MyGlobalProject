@@ -23,7 +23,10 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
             private readonly ICacheService _cacheService;
 
 
-            public CreateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, IMapper mapper, ICategoryWriteRepository categoryWriteRepository, ICacheService cacheService)
+            public CreateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository,
+                                                IMapper mapper,
+                                                ICategoryWriteRepository categoryWriteRepository,
+                                                ICacheService cacheService)
             {
                 _categoryReadRepository = categoryReadRepository;
                 _categoryWriteRepository = categoryWriteRepository;
