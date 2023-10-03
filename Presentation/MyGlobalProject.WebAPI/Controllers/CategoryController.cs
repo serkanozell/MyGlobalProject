@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyGlobalProject.Application.Features.Categories.Commands.CreateCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
@@ -19,8 +20,6 @@ namespace MyGlobalProject.WebAPI.Controllers
             _mediator = mediator;
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -37,6 +36,7 @@ namespace MyGlobalProject.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(CreateCategoryCommand categoryAddDTO)
         {
@@ -45,6 +45,7 @@ namespace MyGlobalProject.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateCategoryCommand updateCategoryCommandRequest)
         {
@@ -53,6 +54,7 @@ namespace MyGlobalProject.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteCategoryCommand deleteCategoryCommand)
         {

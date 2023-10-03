@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using MyGlobalProject.Application.Features.Categories.Commands.CreateCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.DeleteCategory;
 using MyGlobalProject.Application.Features.Categories.Commands.UpdateCategory;
@@ -34,18 +37,22 @@ using MyGlobalProject.Application.Features.UserAddresses.Queries.GetAllUserAddre
 using MyGlobalProject.Application.Features.UserAddresses.Queries.GetByIdUserAddress;
 using MyGlobalProject.Application.Features.Users.Commands.CreateUser;
 using MyGlobalProject.Application.Features.Users.Commands.DeleteUser;
+using MyGlobalProject.Application.Features.Users.Commands.LoginUser;
+using MyGlobalProject.Application.Features.Users.Commands.RegisterUser;
 using MyGlobalProject.Application.Features.Users.Commands.UpdateUser;
 using MyGlobalProject.Application.Features.Users.Queries.GetByIdUsers;
 using MyGlobalProject.Application.ServiceInterfaces.Caching;
+using MyGlobalProject.Application.ServiceInterfaces.JWT;
 using MyGlobalProject.Application.ServiceInterfaces.Notification;
 using MyGlobalProject.Infrastructure.Caching;
 using MyGlobalProject.Infrastructure.Notification;
+using System.Text;
 
 namespace MyGlobalProject.Infrastructure
 {
     public static class InfrastructureServiceRegistration
     {
-        public static void AddInfrastructureServices(this IServiceCollection services)
+        public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddFluentValidationAutoValidation();
 
@@ -70,6 +77,8 @@ namespace MyGlobalProject.Infrastructure
             services.AddScoped<IValidator<DeleteUserAddressCommand>, DeleteUserAddressCommandValidator>();
             services.AddScoped<IValidator<GetByIdUserAddressQuery>, GetByIdUserAddressQueryValidator>();
             services.AddScoped<IValidator<GetAllUserAddressByUserIdQuery>, GetAllUserAddressByUserIdQueryValidator>();
+            services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
+            services.AddScoped<IValidator<LoginUserCommand>, LoginUserCommandValidator>();
 
             services.AddScoped<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
             services.AddScoped<IValidator<CreateOrderWithoutRegisterCommand>, CreateOrderWithoutRegisterCommandValidator>();
@@ -93,7 +102,24 @@ namespace MyGlobalProject.Infrastructure
 
             services.AddDistributedMemoryCache();
             services.AddSingleton<ICacheService, CacheService>();
-            services.AddScoped<IEmailSender,EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<ITokenHandler, Token.TokenHandler>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new()
+                {
+                    ValidateAudience = true, //oluşturulacak token değerini kimlerin kullanacağını belirlediğimiz değer => www.xxx.com
+                    ValidateIssuer = true,   //oluşturulacak token değerini kimin dağıttığını ifade eden alan => www.xapi.com
+                    ValidateLifetime = true, //oluşturulan token değerinin süresini kontrol edecek olan doğrulama
+                    ValidateIssuerSigningKey = true, //üretilecek token değerinin uygulamaya ait bir değer olup olmadığını ifade eden security key verisinin doğrulanmasıdır
+
+                    ValidAudience = configuration["Token:Audience"],
+                    ValidIssuer = configuration["Token:Issuer"],
+                    
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"]!))
+                };
+            });
         }
     }
 }

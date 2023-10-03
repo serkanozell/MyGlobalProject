@@ -1,4 +1,3 @@
-
 using MyGlobalProject.Application;
 using MyGlobalProject.Application.Exceptions;
 using MyGlobalProject.Infrastructure;
@@ -19,7 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistanceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
@@ -35,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

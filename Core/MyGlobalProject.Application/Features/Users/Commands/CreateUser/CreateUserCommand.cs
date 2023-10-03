@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.Extensions;
 using MyGlobalProject.Application.RepositoryInterfaces;
@@ -45,6 +46,17 @@ namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
                 var mappedUser = _mapper.Map<User>(request);
 
                 mappedUser.Password = HtmlEncode(request.Password.ToSHA256Hash());
+
+                var existUser = await _userReadRepository.GetBy(u => u.EMail == mappedUser.EMail).FirstOrDefaultAsync();
+
+                if (existUser != null)
+                {
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = "This e-mail already exist";
+
+                    return response;
+                }
 
                 var isRoleExist = await _roleReadRepository.GetByIdAsync(mappedUser.RoleId);
 
