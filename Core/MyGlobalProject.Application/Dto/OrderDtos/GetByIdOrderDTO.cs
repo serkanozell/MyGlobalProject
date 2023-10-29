@@ -13,6 +13,6 @@ namespace MyGlobalProject.Application.Dto.OrderDtos
         public string AddressTitle { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime OrderCreateDate { get; set; }
-        public OrderStatusEnum OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
     }
 }

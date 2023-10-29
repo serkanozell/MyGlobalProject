@@ -42,7 +42,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
                     return response;
                 }
 
-                var deletedOrderItem = await _orderItemWriteRepository.DeleteAsync(currentOrderItem);
+                var deletedOrderItem = await _orderItemWriteRepository.DeleteAsync(currentOrderItem, cancellationToken);
 
                 var deletedOrderItemDto = _mapper.Map<DeleteOrderItemDTO>(deletedOrderItem);
 

@@ -43,7 +43,7 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.DeleteRole
                     return response;
                 }
 
-                var deletedRole = await _roleWriteRepository.DeleteAsync(currentRole);
+                var deletedRole = await _roleWriteRepository.DeleteAsync(currentRole, cancellationToken);
 
                 var deletedRoleDto = _mapper.Map<DeleteRoleDTO>(deletedRole);
 

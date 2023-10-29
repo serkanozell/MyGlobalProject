@@ -71,7 +71,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.CreateUser
 
                 mappedUser.RoleId = isRoleExist.Id;
 
-                var createdUser = await _userWriteRepository.AddAsync(mappedUser);
+                var createdUser = await _userWriteRepository.AddAsync(mappedUser, cancellationToken);
 
                 var resultUserDTO = _mapper.Map<CreateUserDTO>(createdUser);
 

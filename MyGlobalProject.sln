@@ -7,19 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5BA22C93-17C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F731D211-9B70-4728-9418-D0BE5844C458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGlobalProject.Application", "Core\MyGlobalProject.Application\MyGlobalProject.Application.csproj", "{471C1565-2ABD-48AF-B0D9-990BBD4E8B70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGlobalProject.Application", "Core\MyGlobalProject.Application\MyGlobalProject.Application.csproj", "{471C1565-2ABD-48AF-B0D9-990BBD4E8B70}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{92485F09-6B79-484D-AF72-EE198EE75FC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{76B26B26-C322-4D7F-BE14-032777BE3801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGlobalProject.Domain", "Core\MyGlobalProject.Domain\MyGlobalProject.Domain.csproj", "{94A68C56-BD1E-46DE-BBE1-805697B91802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGlobalProject.Domain", "Core\MyGlobalProject.Domain\MyGlobalProject.Domain.csproj", "{94A68C56-BD1E-46DE-BBE1-805697B91802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGlobalProject.Persistance", "Infrastructure\MyGlobalProject.Persistance\MyGlobalProject.Persistance.csproj", "{DB69DF05-4532-4675-913D-7760183CD4D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGlobalProject.Persistance", "Infrastructure\MyGlobalProject.Persistance\MyGlobalProject.Persistance.csproj", "{DB69DF05-4532-4675-913D-7760183CD4D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGlobalProject.Infrastructure", "Infrastructure\MyGlobalProject.Infrastructure\MyGlobalProject.Infrastructure.csproj", "{3FA4904F-9464-4E22-AA74-6982332D2D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGlobalProject.Infrastructure", "Infrastructure\MyGlobalProject.Infrastructure\MyGlobalProject.Infrastructure.csproj", "{3FA4904F-9464-4E22-AA74-6982332D2D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGlobalProject.WebAPI", "Presentation\MyGlobalProject.WebAPI\MyGlobalProject.WebAPI.csproj", "{68D12F3D-B6AE-4DB3-9BED-94E6D7049EAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGlobalProject.WebAPI", "Presentation\MyGlobalProject.WebAPI\MyGlobalProject.WebAPI.csproj", "{68D12F3D-B6AE-4DB3-9BED-94E6D7049EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

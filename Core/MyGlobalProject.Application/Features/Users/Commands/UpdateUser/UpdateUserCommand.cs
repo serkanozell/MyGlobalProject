@@ -67,7 +67,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.UpdateUser
                 currentUser.EMail = mappedUser.EMail;
                 currentUser.PhoneNumber = mappedUser.PhoneNumber;
 
-                await _userWriteRepository.UpdateAsync(currentUser);
+                await _userWriteRepository.UpdateAsync(currentUser, cancellationToken);
 
                 var userResult = _mapper.Map<UpdateUserDTO>(currentUser);
 

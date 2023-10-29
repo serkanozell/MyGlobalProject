@@ -42,7 +42,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.DeleteProduct
                     return response;
                 }
 
-                await _productWriteRepository.DeleteAsync(currentProduct);
+                await _productWriteRepository.DeleteAsync(currentProduct, cancellationToken);
 
                 var deleteProductDTO = _mapper.Map<DeleteProductDTO>(currentProduct);
 

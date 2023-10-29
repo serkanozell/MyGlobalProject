@@ -56,11 +56,11 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
                     return response;
                 }
 
-                var deletedOrderItems = await _orderItemWriteRepository.DeleteRangeAsync(orderItems);
+                var deletedOrderItems = await _orderItemWriteRepository.DeleteRangeAsync(orderItems, cancellationToken);
 
                 var mappedDeletedOrderItemsDto = _mapper.Map<List<DeleteOrderItemByOrderIdDTO>>(deletedOrderItems);
 
-                await _orderWriteRepository.DeleteAsync(currentOrder);
+                await _orderWriteRepository.DeleteAsync(currentOrder, cancellationToken);
 
                 response.Data = mappedDeletedOrderItemsDto;
                 response.Message = "Success";

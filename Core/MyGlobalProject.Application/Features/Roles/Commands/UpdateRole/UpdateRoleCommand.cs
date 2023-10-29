@@ -45,7 +45,7 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.UpdateRole
 
                 currentRole.Name = mappedRole.Name;
 
-                var updatedRole = await _roleWriteRepository.UpdateAsync(currentRole);
+                var updatedRole = await _roleWriteRepository.UpdateAsync(currentRole, cancellationToken);
 
                 var updatedRoleDto = _mapper.Map<UpdateRoleDTO>(updatedRole);
 

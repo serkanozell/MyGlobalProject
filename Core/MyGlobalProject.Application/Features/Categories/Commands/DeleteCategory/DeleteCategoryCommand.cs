@@ -42,7 +42,7 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.DeleteCategor
                     return response;
                 }
 
-                await _categoryWriteRepository.DeleteAsync(currentCategory);
+                await _categoryWriteRepository.DeleteAsync(currentCategory, cancellationToken);
 
                 var deletedCategoryDTO = _mapper.Map<DeleteCategoryDTO>(currentCategory);
 

@@ -51,7 +51,7 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.UpdateOrder
                 currentOrder.AddressTitle = request.AddressTitle;
                 currentOrder.PhoneNumber = request.PhoneNumber;
 
-                var updatedOrder = await _orderWriteRepository.UpdateAsync(currentOrder);
+                var updatedOrder = await _orderWriteRepository.UpdateAsync(currentOrder, cancellationToken);
 
                 var updatedOrderDto = _mapper.Map<UpdateOrderDTO>(updatedOrder);
 

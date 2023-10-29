@@ -6,6 +6,7 @@ using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 using Serilog;
+using static System.Net.WebUtility;
 
 namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategory
 {
@@ -37,8 +38,9 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
             public async Task<GenericResponse<CreateCategoryDTO>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
                 var mappedCategory = _mapper.Map<Category>(request);
+                mappedCategory.Name = HtmlEncode(mappedCategory.Name);
 
-                var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory);
+                var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory, cancellationToken);
                 var createdCategoryDTO = _mapper.Map<CreateCategoryDTO>(createdCategory);
 
                 GenericResponse<CreateCategoryDTO> response = new GenericResponse<CreateCategoryDTO>()

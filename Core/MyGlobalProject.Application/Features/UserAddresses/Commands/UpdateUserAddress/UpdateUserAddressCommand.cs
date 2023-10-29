@@ -45,7 +45,7 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.UpdateUser
                 currentUserAddress.Address = mappedUserAddress.Address;
                 currentUserAddress.AddressTitle = mappedUserAddress.AddressTitle;
 
-                await _userAddressWriteRepository.UpdateAsync(currentUserAddress);
+                await _userAddressWriteRepository.UpdateAsync(currentUserAddress, cancellationToken);
 
                 var updatedUserAddressDto = _mapper.Map<UpdateUserAddressDTO>(currentUserAddress);
 

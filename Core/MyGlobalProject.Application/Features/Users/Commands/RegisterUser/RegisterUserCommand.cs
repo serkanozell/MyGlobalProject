@@ -60,7 +60,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.RegisterUser
                 newUser.Password = HtmlEncode(newUser.Password.ToSHA256Hash());
                 newUser.RoleId = memberRole!.Id;
 
-                var registeredUser = await _userWriteRepository.AddAsync(newUser);
+                var registeredUser = await _userWriteRepository.AddAsync(newUser, cancellationToken);
 
                 var mappedRegisteredUser = _mapper.Map<RegisterUserDTO>(registeredUser);
 

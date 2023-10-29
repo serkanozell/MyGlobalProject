@@ -33,8 +33,6 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrder
 
             public async Task<GenericResponse<CreateOrderDTO>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                // order item tarafında ise alınacakları list olarak alıp kayıttaki gibi dönerek tek tek order açılacak şekilde güncelleme yapılmalı.
-                // kaydı dinleyerek düzenlemelerini tamamla
                 var response = new GenericResponse<CreateOrderDTO>();
 
                 var isUserExist = await _userReadRepository.GetByIdAsync((Guid)request.UserId!);
@@ -70,7 +68,7 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrder
                 mappedOrder.OrderCreateDate = DateTime.Now;
                 mappedOrder.OrderStatus = OrderStatusEnum.Pending;
 
-                var createdOrder = await _orderWriteRepository.AddAsync(mappedOrder);
+                var createdOrder = await _orderWriteRepository.AddAsync(mappedOrder, cancellationToken);
 
                 var resultOrderDto = _mapper.Map<CreateOrderDTO>(createdOrder);
 

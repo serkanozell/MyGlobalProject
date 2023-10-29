@@ -75,7 +75,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderIt
                     PhoneNumber = currentUser.PhoneNumber,
                     OrderCreateDate = DateTime.Now,
                     OrderStatus = OrderStatusEnum.Pending
-                });
+                }, cancellationToken);
 
                 foreach (var item in request.OrderItems)
                 {
@@ -88,7 +88,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.CreateOrderIt
                     };
 
                     createdOrderItemList.Add(_mapper.Map<CreateOrderItemDTO>(orderItem));
-                    await _orderItemWriteRepository.AddAsync(orderItem);
+                    await _orderItemWriteRepository.AddAsync(orderItem, cancellationToken);
                 }
 
                 createdOrderItemList.ForEach(item => { item.ProductName = _productReadRepository.GetByIdAsync(item.ProductId).Result.Name; });

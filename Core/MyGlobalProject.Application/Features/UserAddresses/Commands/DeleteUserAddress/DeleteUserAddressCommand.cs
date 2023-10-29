@@ -38,7 +38,7 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.DeleteUser
                     return response;
                 }
 
-                await _userAddressWriteRepository.DeleteAsync(currentUserAddress);
+                await _userAddressWriteRepository.DeleteAsync(currentUserAddress, cancellationToken);
 
                 var mappedUserAddress = _mapper.Map<DeleteUserAddressDTO>(currentUserAddress);
 

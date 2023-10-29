@@ -28,7 +28,7 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.CreateRole
 
                 var mappedRole = _mapper.Map<Role>(request);
 
-                var addedRole = await _roleWriteRepository.AddAsync(mappedRole);
+                var addedRole = await _roleWriteRepository.AddAsync(mappedRole, cancellationToken);
 
                 var addedRoleDto = _mapper.Map<CreateRoleDTO>(addedRole);
 

@@ -45,7 +45,7 @@ namespace MyGlobalProject.Application.Features.UserAddresses.Commands.CreateUser
 
                 var mappedUserAddress = _mapper.Map<UserAddress>(request);
 
-                var addedUserAddress = await _userAddressWriteRepository.AddAsync(mappedUserAddress);
+                var addedUserAddress = await _userAddressWriteRepository.AddAsync(mappedUserAddress, cancellationToken);
 
                 var mappedResultUserAddress = _mapper.Map<CreateUserAddresDTO>(addedUserAddress);
 

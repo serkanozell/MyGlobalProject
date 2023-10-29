@@ -52,7 +52,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.UpdateProduct
                 currentProduct.Price = request.Price;
                 currentProduct.CategoryId = request.CategoryId;
 
-                await _productWriteRepository.UpdateAsync(currentProduct);
+                await _productWriteRepository.UpdateAsync(currentProduct, cancellationToken);
 
                 var mappedProduct = _mapper.Map<UpdateProductDTO>(currentProduct);
 

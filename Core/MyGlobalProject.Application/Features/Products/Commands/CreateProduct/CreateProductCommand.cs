@@ -50,7 +50,7 @@ namespace MyGlobalProject.Application.Features.Products.Commands.CreateProduct
                     return response;
                 }
 
-                var createdProduct = await _productWriteRepository.AddAsync(mappedProduct);
+                var createdProduct = await _productWriteRepository.AddAsync(mappedProduct, cancellationToken);
 
                 var resultProductDTO = _mapper.Map<CreateProductDTO>(createdProduct);
 

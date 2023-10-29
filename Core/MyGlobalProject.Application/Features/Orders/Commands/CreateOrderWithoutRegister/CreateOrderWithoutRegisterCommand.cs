@@ -37,7 +37,7 @@ namespace MyGlobalProject.Application.Features.Orders.Commands.CreateOrderWithou
                 mappedOrder.OrderCreateDate = DateTime.Now;
                 mappedOrder.OrderStatus = OrderStatusEnum.Pending;
 
-                var createdOrder = await _orderWriteRepository.AddAsync(mappedOrder);
+                var createdOrder = await _orderWriteRepository.AddAsync(mappedOrder, cancellationToken);
 
                 var resultCreatedOrder = _mapper.Map<CreateOrderWithoutRegisterDTO>(createdOrder);
 

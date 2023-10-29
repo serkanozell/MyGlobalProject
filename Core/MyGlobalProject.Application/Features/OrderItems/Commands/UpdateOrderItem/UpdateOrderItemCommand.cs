@@ -76,7 +76,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.UpdateOrderIt
                 currentOrderItem.Quantity = request.Quantity;
                 currentOrderItem.Price = request.Price;
 
-                var updatedOrderItem = await _orderItemWriteRepository.UpdateAsync(currentOrderItem);
+                var updatedOrderItem = await _orderItemWriteRepository.UpdateAsync(currentOrderItem, cancellationToken);
 
                 var updatedOrderItemDto = _mapper.Map<UpdateOrderItemDTO>(updatedOrderItem);
 

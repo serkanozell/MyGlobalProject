@@ -46,7 +46,7 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.UpdateCategor
 
                 currentCategory!.Name = request.Name;
 
-                await _categoryWriteRepository.UpdateAsync(currentCategory);
+                await _categoryWriteRepository.UpdateAsync(currentCategory, cancellationToken);
 
                 var updatedCategoryDTO = _mapper.Map<UpdateCategoryDTO>(currentCategory);
 

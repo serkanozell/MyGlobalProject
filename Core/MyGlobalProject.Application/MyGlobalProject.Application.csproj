@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Behaviors\Validation\" />
     <Folder Include="Features\Users\Commands\CreateUser\" />
     <Folder Include="Parameters\" />
   </ItemGroup>
