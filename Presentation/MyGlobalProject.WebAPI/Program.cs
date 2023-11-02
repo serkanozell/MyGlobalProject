@@ -1,3 +1,4 @@
+using Hangfire;
 using MyGlobalProject.Application;
 using MyGlobalProject.Application.Exceptions;
 using MyGlobalProject.Infrastructure;
@@ -34,6 +35,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+app.UseHangfireDashboard("/Hangfire");
 
 app.UseAuthentication();
 

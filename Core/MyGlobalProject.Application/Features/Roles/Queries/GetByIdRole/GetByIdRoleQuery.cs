@@ -2,6 +2,7 @@
 using MediatR;
 using MyGlobalProject.Application.Dto.RoleDtos;
 using MyGlobalProject.Application.RepositoryInterfaces;
+using MyGlobalProject.Application.ServiceInterfaces.Caching;
 using MyGlobalProject.Application.Wrappers;
 using MyGlobalProject.Domain.Entities;
 
@@ -15,16 +16,26 @@ namespace MyGlobalProject.Application.Features.Roles.Queries.GetByIdRole
         {
             private readonly IRoleReadRepository _roleReadRepository;
             private readonly IMapper _mapper;
+            private readonly ICacheService _cacheService;
 
-            public GetByIdRoleQueryHandler(IRoleReadRepository roleReadRepository, IMapper mapper)
+            public GetByIdRoleQueryHandler(IRoleReadRepository roleReadRepository, IMapper mapper, ICacheService cacheService)
             {
                 _roleReadRepository = roleReadRepository;
                 _mapper = mapper;
+                _cacheService = cacheService;
             }
 
             public async Task<GenericResponse<GetByIdRoleDTO>> Handle(GetByIdRoleQuery request, CancellationToken cancellationToken)
             {
                 var response = new GenericResponse<GetByIdRoleDTO>();
+
+                var getByIdRoleDto = await _cacheService.GetAsync<GetByIdRoleDTO>($"getbyidrole-{request.Id}");
+
+                if (getByIdRoleDto is not null)
+                {
+                    response.Data = getByIdRoleDto;
+                    response.Message = "Success";
+                }
 
                 var mappedRole = _mapper.Map<Role>(request);
 
@@ -43,6 +54,8 @@ namespace MyGlobalProject.Application.Features.Roles.Queries.GetByIdRole
 
                 response.Data = getRoleDto;
                 response.Message = "Success";
+
+                await _cacheService.SetAsync($"getbyidrole-{request.Id}", getRoleDto);
 
                 return response;
             }

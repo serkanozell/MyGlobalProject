@@ -8,9 +8,9 @@ using MyGlobalProject.Application.Wrappers;
 
 namespace MyGlobalProject.Application.Features.Users.Queries.GetAllUsers
 {
-    public class GetAllUserQuery : IRequest<GenericResponse<UserListDTO>>
+    public class GetAllUserQuery : IRequest<GenericResponse<List<UserListDTO>>>
     {
-        public class GetAllUserQueryHandler : IRequestHandler<GetAllUserQuery, GenericResponse<UserListDTO>>
+        public class GetAllUserQueryHandler : IRequestHandler<GetAllUserQuery, GenericResponse<List<UserListDTO>>>
         {
             private readonly IUserReadRepository _userReadRepository;
             private readonly IMapper _mapper;
@@ -23,11 +23,11 @@ namespace MyGlobalProject.Application.Features.Users.Queries.GetAllUsers
                 _cacheService = cacheService;
             }
 
-            public async Task<GenericResponse<UserListDTO>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<List<UserListDTO>>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
             {
-                var response = new GenericResponse<UserListDTO>();
+                var response = new GenericResponse<List<UserListDTO>>();
 
-                var userListDTOs = await _cacheService.GetAsync<UserListDTO>("users");
+                var userListDTOs = await _cacheService.GetAsync<List<UserListDTO>>("users");
 
                 if (userListDTOs != null)
                 {
@@ -39,7 +39,7 @@ namespace MyGlobalProject.Application.Features.Users.Queries.GetAllUsers
 
                 var userList = await _userReadRepository.GetBy(u => u.IsActive && !u.IsDeleted).ToListAsync();
 
-                var mappedUserList = _mapper.Map<UserListDTO>(userList);
+                var mappedUserList = _mapper.Map<List<UserListDTO>>(userList);
 
                 response.Data = mappedUserList;
                 response.Message = "Success";
