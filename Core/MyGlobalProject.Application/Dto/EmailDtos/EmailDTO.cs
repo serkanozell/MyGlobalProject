@@ -2,8 +2,8 @@
 {
     public class EmailDTO
     {
-        public string To { get; set; } = string.Empty;
-        public string CC { get; set; } = string.Empty;
+        public List<string> To { get; set; } = new List<string>();
+        public List<string> CC { get; set; } = new List<string>();
         public string Subject { get; set; } = string.Empty;
         public string Body { get; set; } = string.Empty;
     }

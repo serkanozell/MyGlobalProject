@@ -1,13 +1,7 @@
-﻿using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Configuration;
-using MimeKit;
-using MimeKit.Text;
+﻿using Microsoft.Extensions.Configuration;
 using MyGlobalProject.Application.Dto.EmailDtos;
 using MyGlobalProject.Application.ServiceInterfaces.Notification;
 using Newtonsoft.Json;
-using RabbitMQ.Client;
-using Serilog;
 using System.Text;
 
 namespace MyGlobalProject.Infrastructure.Notification

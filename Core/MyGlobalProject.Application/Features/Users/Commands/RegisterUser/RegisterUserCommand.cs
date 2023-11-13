@@ -66,7 +66,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.RegisterUser
 
                 await _emailSender.SendEmailAsync(new EmailDTO
                 {
-                    To = mappedRegisteredUser.EMail,
+                    To = new List<string>() { mappedRegisteredUser.EMail },
                     Subject = "New Registration",
                     Body = $"Congrats. Your account details: \n Email: {mappedRegisteredUser.EMail}, Password: {request.Password}"
                 });

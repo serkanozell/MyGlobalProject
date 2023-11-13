@@ -28,6 +28,8 @@ namespace MyGlobalProject.Infrastructure.Token
             {
                 new Claim(ClaimTypes.Email,user.EMail),
                 new Claim(ClaimTypes.Role,role.Name),
+                new Claim(ClaimTypes.Name,user.FirstName),
+                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber)
             };
 
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.SecurityKey));
