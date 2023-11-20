@@ -27,6 +27,8 @@ namespace MyGlobalProject.Application.Features.Roles.Mapping
 
             CreateMap<Role, GetAllRoleQuery>().ReverseMap();
             CreateMap<Role, RoleListDTO>().ReverseMap();
+
+            CreateMap<Role, RoleTokenDTO>().ReverseMap();
         }
     }
 }

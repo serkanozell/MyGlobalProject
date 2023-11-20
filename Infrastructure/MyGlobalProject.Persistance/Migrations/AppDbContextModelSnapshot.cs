@@ -46,7 +46,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.Order", b =>
@@ -102,7 +102,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.OrderItem", b =>
@@ -137,7 +137,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.Product", b =>
@@ -179,7 +179,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.Role", b =>
@@ -206,7 +206,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.User", b =>
@@ -258,7 +258,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.UserAddress", b =>
@@ -294,7 +294,7 @@ namespace MyGlobalProject.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddresses");
+                    b.ToTable("UserAddresses", (string)null);
                 });
 
             modelBuilder.Entity("MyGlobalProject.Domain.Entities.Product", b =>

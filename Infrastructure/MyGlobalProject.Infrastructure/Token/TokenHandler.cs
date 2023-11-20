@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using MyGlobalProject.Application.Dto.RoleDtos;
+using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.ServiceInterfaces.JWT;
 using MyGlobalProject.Application.ServiceInterfaces.Token;
-using MyGlobalProject.Domain.Entities;
-using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
 
@@ -21,8 +21,9 @@ namespace MyGlobalProject.Infrastructure.Token
             _tokenOptions = configuration.GetSection("Token").Get<TokenOptions>()!;
         }
 
-        public AccessToken CreateAccessToken(User user, Role role)
+        public async Task<AccessToken> CreateAccessTokenAsync(UserTokenDTO user, RoleTokenDTO role)
         {
+            var token = new TokenModel();
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var claims = new List<Claim>()
             {
@@ -31,34 +32,26 @@ namespace MyGlobalProject.Infrastructure.Token
                 new Claim(ClaimTypes.Name,user.FirstName),
                 new Claim(ClaimTypes.MobilePhone,user.PhoneNumber)
             };
+            var uri = "https://localhost:7087/api/Token";
+            var client = new HttpClient() { BaseAddress = new Uri(uri) };
 
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.SecurityKey));
+            token.TokenOptions = _tokenOptions;
+            token.User = user;
+            token.Role = role;
 
-            SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var json = JsonConvert.SerializeObject(token);
+            var content = new StringContent(json, encoding: Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("Token", content);
 
-            var jwt = CreateJwtToken(_tokenOptions, signingCredentials, claims);
+            var response = await responseMessage.Content.ReadAsStringAsync();
 
-            JwtSecurityTokenHandler securityTokenHandler = new JwtSecurityTokenHandler();
-            var token = securityTokenHandler.WriteToken(jwt);
+            var tokenResult = JsonConvert.DeserializeObject<AccessToken>(response);
 
             return new AccessToken
             {
-                Token = token,
+                Token = tokenResult.Token,
                 Expiration = _accessTokenExpiration
             };
-        }
-
-        private JwtSecurityToken CreateJwtToken(TokenOptions tokenOptions, SigningCredentials signingCredentials, List<Claim> claims)
-        {
-            var jwt = new JwtSecurityToken(
-                audience: _tokenOptions.Audience,
-                issuer: _tokenOptions.Issuer,
-                expires: _accessTokenExpiration,
-                notBefore: DateTime.Now,
-                signingCredentials: signingCredentials,
-                claims: claims);
-
-            return jwt;
         }
     }
 }

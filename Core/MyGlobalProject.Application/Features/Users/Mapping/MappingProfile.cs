@@ -27,6 +27,8 @@ namespace MyGlobalProject.Application.Features.Users.Mapping
 
             //CreateMap<User, LoginUserDTO>().ReverseMap();
             CreateMap<User, LoginUserCommand>().ReverseMap();
+
+            CreateMap<User,UserTokenDTO>().ReverseMap();
         }
     }
 }

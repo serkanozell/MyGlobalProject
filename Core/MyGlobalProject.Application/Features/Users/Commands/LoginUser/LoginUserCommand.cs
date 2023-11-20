@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MyGlobalProject.Application.Dto.RoleDtos;
+using MyGlobalProject.Application.Dto.UserDtos;
 using MyGlobalProject.Application.Extensions;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Application.ServiceInterfaces.JWT;
@@ -61,7 +63,10 @@ namespace MyGlobalProject.Application.Features.Users.Commands.LoginUser
 
                 var userRole = await _roleReadRepository.GetByIdAsync(isUserExist.RoleId);
 
-                AccessToken token = _tokenHandler.CreateAccessToken(isUserExist, userRole);
+                var userTokenDto = _mapper.Map<UserTokenDTO>(isUserExist);
+                var roleTokenDto = _mapper.Map<RoleTokenDTO>(userRole);
+
+                AccessToken token = await _tokenHandler.CreateAccessTokenAsync(userTokenDto, roleTokenDto);
 
                 response.Data = token;
                 response.Success = true;
