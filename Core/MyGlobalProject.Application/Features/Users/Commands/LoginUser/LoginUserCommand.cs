@@ -39,7 +39,7 @@ namespace MyGlobalProject.Application.Features.Users.Commands.LoginUser
                 var mappedUser = _mapper.Map<User>(request);
                 mappedUser.Password = mappedUser.Password.ToSHA256Hash();
 
-                var isUserExist = await _userReadRepository.GetBy(u => u.EMail == mappedUser.EMail && u.IsActive && !u.IsDeleted).FirstOrDefaultAsync();
+                var isUserExist = await _userReadRepository.GetBy(u => u.EMail == mappedUser.EMail).FirstOrDefaultAsync();
 
 
 

@@ -11,5 +11,6 @@ namespace MyGlobalProject.Application.RepositoryInterfaces
                              Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
         Task<T> GetSingleAsync(Expression<Func<T, bool>> expression);
         Task<T> GetByIdAsync(Guid id);
+        IQueryable<T> GetQueryableAllActive();
     }
 }

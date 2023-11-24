@@ -29,7 +29,7 @@ namespace MyGlobalProject.Persistance.Services.Category
             if (categoryListFromCache is not null)
                 return categoryListFromCache;
 
-            var result = _mapper.Map<List<CategoryListDTO>>(await _categoryReadRepository.GetBy(c => c.IsActive && !c.IsDeleted).ToListAsync());
+            var result = _mapper.Map<List<CategoryListDTO>>(await _categoryReadRepository.GetQueryableAllActive().ToListAsync());
 
             return result;
         }
@@ -43,7 +43,7 @@ namespace MyGlobalProject.Persistance.Services.Category
 
         public async Task LogAllCategories()
         {
-            var categoryList = await _categoryReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).ToListAsync();
+            var categoryList = await _categoryReadRepository.GetQueryableAllActive().ToListAsync();
 
             foreach (var category in categoryList)
             {

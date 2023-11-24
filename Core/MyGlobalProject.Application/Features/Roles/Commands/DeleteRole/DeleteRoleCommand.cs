@@ -32,7 +32,7 @@ namespace MyGlobalProject.Application.Features.Roles.Commands.DeleteRole
 
                 var mappedRole = _mapper.Map<Role>(request);
 
-                var currentRole = await _roleReadRepository.GetBy(x => x.Id == mappedRole.Id && x.IsActive && !x.IsDeleted).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                var currentRole = await _roleReadRepository.GetBy(x => x.Id == mappedRole.Id).FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
                 if (currentRole is null)
                 {

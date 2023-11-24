@@ -27,7 +27,7 @@ namespace MyGlobalProject.Persistance.Services.Product
             if (productListFromCache is not null)
                 return productListFromCache;
 
-            var result = _mapper.Map<List<ProductListDTO>>(await _productReadRepository.GetBy(p => p.IsActive && !p.IsDeleted)
+            var result = _mapper.Map<List<ProductListDTO>>(await _productReadRepository.GetQueryableAllActive()
                                                                             .Include(p => p.Category)
                                                                             .ToListAsync());
             return result;
@@ -40,9 +40,7 @@ namespace MyGlobalProject.Persistance.Services.Product
             if (productListFromCache is not null)
                 return productListFromCache;
 
-            var result = _mapper.Map<List<ProductListDTO>>(await _productReadRepository.GetBy(x => x.CategoryId == categoryId
-                                                                                  && x.IsActive
-                                                                                  && !x.IsDeleted).Include(y => y.Category).ToListAsync());
+            var result = _mapper.Map<List<ProductListDTO>>(await _productReadRepository.GetBy(x => x.CategoryId == categoryId).Include(y => y.Category).ToListAsync());
 
             return result;
         }

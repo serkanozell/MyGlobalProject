@@ -45,7 +45,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Commands.DeleteOrderIt
                     return response;
                 }
 
-                var orderItems = await _orderItemReadRepository.GetBy(o => o.OrderId == currentOrder.Id && o.IsActive && !o.IsDeleted).ToListAsync();
+                var orderItems = await _orderItemReadRepository.GetBy(o => o.OrderId == currentOrder.Id).ToListAsync();
 
                 if (!orderItems.Any())
                 {

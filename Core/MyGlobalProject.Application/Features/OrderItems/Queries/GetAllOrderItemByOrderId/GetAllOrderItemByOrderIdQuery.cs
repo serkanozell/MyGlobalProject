@@ -39,7 +39,7 @@ namespace MyGlobalProject.Application.Features.OrderItems.Queries.GetAllOrderIte
                     return response;
                 }
 
-                var orderItems = await _orderItemReadRepository.GetBy(o => o.OrderId == existOrder.Id && o.IsActive && !o.IsDeleted).ToListAsync();
+                var orderItems = await _orderItemReadRepository.GetBy(o => o.OrderId == existOrder.Id).ToListAsync();
 
                 var mappedOrderItemListDto = _mapper.Map<List<OrderItemListDTO>>(orderItems);
 

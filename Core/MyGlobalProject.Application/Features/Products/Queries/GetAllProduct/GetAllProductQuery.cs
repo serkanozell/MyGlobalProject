@@ -38,7 +38,7 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProduct
                 if (productListDTOs is not null)
                     return productListDTOs;
 
-                var productList = await _productReadRepository.GetBy(x => x.IsActive && !x.IsDeleted).Include(p => p.Category).ToListAsync();
+                var productList = await _productReadRepository.GetQueryableAllActive().Include(p => p.Category).ToListAsync();
 
                 var productListDTO = _mapper.Map<List<ProductListDTO>>(productList);
 

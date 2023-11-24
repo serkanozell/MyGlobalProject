@@ -19,12 +19,12 @@ namespace MyGlobalProject.Persistance.Services.UserAddress
 
         public async Task<List<UserAddressListDTO>> GetAllUserAddress()
         {
-            return _mapper.Map<List<UserAddressListDTO>>(await _userAddressReadRepository.GetBy(ua => ua.IsActive && !ua.IsDeleted).ToListAsync());
+            return _mapper.Map<List<UserAddressListDTO>>(await _userAddressReadRepository.GetQueryableAllActive().ToListAsync());
         }
 
         public async Task<List<UserAddressListDTO>> GetAllUserAddressByUserId(Guid userId)
         {
-            return _mapper.Map<List<UserAddressListDTO>>(await _userAddressReadRepository.GetBy(ua => ua.UserId == userId && ua.IsActive && !ua.IsDeleted).ToListAsync());
+            return _mapper.Map<List<UserAddressListDTO>>(await _userAddressReadRepository.GetBy(ua => ua.UserId == userId).ToListAsync());
         }
 
         public async Task<GetByIdUserAddressDTO> GetById(Guid addressId)

@@ -24,7 +24,7 @@ namespace MyGlobalProject.Persistance.Services.OrderItem
 
         public async Task<List<OrderItemListDTO>> GetAllOrderItemByOrderId(Guid orderId)
         {
-            return _mapper.Map<List<OrderItemListDTO>>(await _orderItemReadRepository.GetBy(o => o.OrderId == orderId && o.IsActive && !o.IsDeleted).ToListAsync());
+            return _mapper.Map<List<OrderItemListDTO>>(await _orderItemReadRepository.GetBy(o => o.OrderId == orderId).ToListAsync());
         }
 
         public async Task<GetByIdOrderItemDTO> GetByIdOrderItem(Guid orderItemId)

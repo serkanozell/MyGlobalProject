@@ -19,7 +19,7 @@ namespace MyGlobalProject.Persistance.Services.Order
 
         public async Task<List<OrderListDTO>> GetAllOrder()
         {
-            return _mapper.Map<List<OrderListDTO>>(await _orderReadRepository.GetBy(o => o.IsActive && !o.IsDeleted).ToListAsync());
+            return _mapper.Map<List<OrderListDTO>>(await _orderReadRepository.GetQueryableAllActive().ToListAsync());
         }
 
         public async Task<List<OrderListDTO>> GetAllOrderByUserId(Guid userId)

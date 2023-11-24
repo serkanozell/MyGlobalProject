@@ -37,7 +37,7 @@ namespace MyGlobalProject.Application.Features.Users.Queries.GetAllUsers
                     return response;
                 }
 
-                var userList = await _userReadRepository.GetBy(u => u.IsActive && !u.IsDeleted).ToListAsync();
+                var userList = await _userReadRepository.GetQueryableAllActive().ToListAsync();
 
                 var mappedUserList = _mapper.Map<List<UserListDTO>>(userList);
 

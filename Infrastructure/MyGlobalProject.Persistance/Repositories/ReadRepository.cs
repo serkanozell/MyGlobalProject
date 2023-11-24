@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using MyGlobalProject.Application.RepositoryInterfaces;
 using MyGlobalProject.Domain.Common;
@@ -17,23 +18,33 @@ namespace MyGlobalProject.Persistance.Repositories
         public DbSet<T> Table => _context.Set<T>();
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>>? expression = null)
-            => expression == null ? Table.AsQueryable() : Table.Where(expression)
+            => expression == null ? GetQueryableAllActive() : GetQueryableAllActive().Where(expression)
                                                                .AsQueryable();
 
-        public IQueryable<T> GetBy(Expression<Func<T, bool>> expression,
+        public async IQueryable<T> GetBy(Expression<Func<T, bool>> expression,
                              Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
-            return Table.Where(expression);
+            return GetQueryableAllActive().Where(expression);
+        }
+
+        public IQueryable<T> GetQueryable()
+        {
+            return Table.Where(x => x.IsDeleted != true);
+        }
+
+        public IQueryable<T> GetQueryableAllActive()
+        {
+            return GetQueryable().Where(x => x.IsActive);
         }
 
         public async Task<T> GetByIdAsync(Guid id)
         {
-            return await Table.FirstOrDefaultAsync(x => x.Id == id && x.IsActive && !x.IsDeleted);
+            return await GetQueryableAllActive().FirstOrDefaultAsync(x => x.Id == id) ?? new T();
         }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression)
         {
-            return await Table.FirstOrDefaultAsync(expression);
+            return await Table.FirstOrDefaultAsync(expression) ?? new T();
         }
     }
 }

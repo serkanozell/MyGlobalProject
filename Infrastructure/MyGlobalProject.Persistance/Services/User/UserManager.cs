@@ -31,7 +31,7 @@ namespace MyGlobalProject.Persistance.Services.User
             if (userListFromCache is not null)
                 return userListFromCache;
 
-            var result = _mapper.Map<List<UserListDTO>>(await _userReadRepository.GetBy(u => u.IsActive && !u.IsDeleted).ToListAsync());
+            var result = _mapper.Map<List<UserListDTO>>(await _userReadRepository.GetQueryableAllActive().ToListAsync());
 
             return result;
         }
@@ -45,9 +45,7 @@ namespace MyGlobalProject.Persistance.Services.User
 
         public async Task SendMailToAllAdmins(CreateUserDTO createUserDTO)
         {
-            var adminMails = await _userReadRepository.GetBy(x => x.IsActive
-             && !x.IsDeleted
-             && x.RoleId == Guid.Parse("f5e60b49-62ab-4e76-cc5c-08dbc26c136e")
+            var adminMails = await _userReadRepository.GetBy(x => x.RoleId == Guid.Parse("f5e60b49-62ab-4e76-cc5c-08dbc26c136e")
              )
              .Select(x => x.EMail)
              .ToListAsync();

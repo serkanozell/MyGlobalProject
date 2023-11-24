@@ -50,7 +50,7 @@ namespace MyGlobalProject.Application.Features.Products.Queries.GetAllProductByC
                     return response;
                 }
 
-                var products = await _productReadRepository.GetBy(x => x.CategoryId == request.Id && x.IsActive && !x.IsDeleted).Include(y => y.Category).ToListAsync();
+                var products = await _productReadRepository.GetBy(x => x.CategoryId == request.Id).Include(y => y.Category).ToListAsync();
 
                 var mappedProductListDTO = _mapper.Map<List<ProductListDTO>>(products);
 

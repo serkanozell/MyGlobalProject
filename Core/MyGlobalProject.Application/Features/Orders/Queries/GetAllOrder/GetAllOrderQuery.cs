@@ -35,7 +35,7 @@ namespace MyGlobalProject.Application.Features.Orders.Queries.GetAllOrder
             {
                 try
                 {
-                    var orderList = await _orderReadRepository.GetBy(o => o.IsActive && !o.IsDeleted).ToListAsync();
+                    var orderList = await _orderReadRepository.GetQueryableAllActive().ToListAsync();
 
                     var orderListDto = _mapper.Map<List<OrderListDTO>>(orderList);
 
