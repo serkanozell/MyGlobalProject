@@ -10,14 +10,16 @@ namespace MyGlobalProject.Persistance.Services.Category
     public class CategoryManager : ICategoryService
     {
         private readonly ICategoryReadRepository _categoryReadRepository;
+        private readonly ICategoryWriteRepository _categoryWriteRepository;
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
 
-        public CategoryManager(ICategoryReadRepository categoryReadRepository, IMapper mapper, ICacheService cacheService)
+        public CategoryManager(ICategoryReadRepository categoryReadRepository, IMapper mapper, ICacheService cacheService, ICategoryWriteRepository categoryWriteRepository)
         {
             _categoryReadRepository = categoryReadRepository;
             _mapper = mapper;
             _cacheService = cacheService;
+            _categoryWriteRepository = categoryWriteRepository;
         }
 
         public async Task<List<CategoryListDTO>> GetAllAsync()

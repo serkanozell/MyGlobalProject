@@ -37,24 +37,32 @@ namespace MyGlobalProject.Application.Features.Categories.Commands.CreateCategor
 
             public async Task<GenericResponse<CreateCategoryDTO>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
-                var mappedCategory = _mapper.Map<Category>(request);
-                mappedCategory.Name = HtmlEncode(mappedCategory.Name);
-
-                var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory, cancellationToken);
-                var createdCategoryDTO = _mapper.Map<CreateCategoryDTO>(createdCategory);
-
-                GenericResponse<CreateCategoryDTO> response = new GenericResponse<CreateCategoryDTO>()
+                try
                 {
-                    Data = createdCategoryDTO,
-                    Success = true,
-                    Message = "Category added successfully"
-                };
+                    var mappedCategory = _mapper.Map<Category>(request);
+                    mappedCategory.Name = HtmlEncode(mappedCategory.Name);
 
-                Log.Information($"Category Added. Id = {createdCategory.Id}, Name = {createdCategory.Name}, Date = {createdCategory.CreatedDate}");
+                    var createdCategory = await _categoryWriteRepository.AddAsync(mappedCategory, cancellationToken);
+                    var createdCategoryDTO = _mapper.Map<CreateCategoryDTO>(createdCategory);
 
-                await _cacheService.RemoveAllKeysAsync();
+                    GenericResponse<CreateCategoryDTO> response = new GenericResponse<CreateCategoryDTO>()
+                    {
+                        Data = createdCategoryDTO,
+                        Success = true,
+                        Message = "Category added successfully"
+                    };
 
-                return response;
+                    Log.Information($"Category Added. Id = {createdCategory.Id}, Name = {createdCategory.Name}, Date = {createdCategory.CreatedDate}");
+
+                    await _cacheService.RemoveAllKeysAsync();
+
+                    return response;
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
             }
         }
     }

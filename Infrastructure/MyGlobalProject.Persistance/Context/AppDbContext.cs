@@ -6,7 +6,7 @@ namespace MyGlobalProject.Persistance.Context
 {
     public class AppDbContext : DbContext
     {
-        protected IConfiguration Configuration { get; set; }
+        //protected IConfiguration Configuration { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -15,9 +15,8 @@ namespace MyGlobalProject.Persistance.Context
         public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<Role> Roles { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            Configuration = configuration;
         }
     }
 }
